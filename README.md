@@ -47,6 +47,14 @@ Or get a free key from the-odds-api.com and run with `--odds-key YOUR_KEY` to pu
 - **Tuesday/Wednesday**: first look, once last week's data is in
 - **Friday** (Saturday for Monday games): rerun after the final injury report. This is the run that matters.
 
+## How picks work against real sportsbook lines
+
+Books are sharp, so the model doesn't get the final say:
+1. **Level check.** The model's projections get nudged toward the books' overall level (halfway by default). That way a model that runs a little low or high doesn't turn every line into an under or an over. Each player's read relative to the market stays the same.
+2. **Blend.** Final odds are 30% model and 70% book (with the vig removed).
+3. **Pick rules.** A bet needs +3% expected value or better. The player needs 3+ games in his role, must have played the team's last game, and can't be Out or Doubtful. If the model and book disagree by more than 25 points, it's skipped, since the model is probably missing news.
+4. **Grading.** Every line is saved to `data/lines_history.csv` and graded after the game. Once 80+ lines are graded, the run re-fits both settings (how much to trust the model, how far to move its level) from real results. The site shows the record against real lines.
+
 ## Self-tuning
 
 Every run, before making picks, the tool:

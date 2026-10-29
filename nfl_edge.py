@@ -30,6 +30,11 @@ SIMS = 20000
 MATCH_W = 0.25       # how much the defense matchup moves receiving yards (0 = ignore, 1 = full)
 MATCH_W_RUSH = 1.0   # same for rushing
 LEAN_CONF = 0.10     # lean needs model >= 50% + this on one side
+W_MODEL = 0.30       # vs real lines: final odds = this much model + the rest sportsbook (books are sharp)
+K_POWER = 0.5        # how far to move the model's level to the books' level (0 = trust model, 1 = trust books)
+MIN_EV = 0.03        # a real-line pick needs at least +3% expected value after blending
+MAX_GAP = 0.25       # if model and book disagree by more than this, the model is probably missing news: skip
+HISTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "lines_history.csv")
 POS_SKILL = ["WR", "TE", "RB"]
 
 # ---------------------------------------------------------------- data
@@ -287,6 +292,14 @@ def proj_game(off, de, spread_for_off, total, vol, allowed, DP, U, inj, P):
     # blend share: recent role weighted more; recency only counts games played
     team_U["share_raw"] = 0.6 * team_U.tshare_l3 + 0.4 * team_U.tshare
     team_U["cshare_raw"] = 0.6 * team_U.cshare_l3 + 0.4 * team_U.cshare
+    # 1-2 game samples (rookies, guys back from injury) get pulled toward a normal role for the position,
+    # so one fluky game doesn't squeeze every teammate's projection
+    PRIOR_T = {"WR": 0.14, "TE": 0.11, "RB": 0.08, "QB": 0.0}; PRIOR_C = {"RB": 0.35, "WR": 0.01, "TE": 0.0, "QB": 0.05}
+    thin = team_U.gp < 3
+    if thin.any():
+        gp_ = team_U.gp.clip(lower=0)
+        team_U.loc[thin, "share_raw"] = (gp_ * team_U.share_raw + 3 * team_U.pos.map(PRIOR_T).fillna(0.08))[thin] / (gp_ + 3)[thin]
+        team_U.loc[thin, "cshare_raw"] = (gp_ * team_U.cshare_raw + 3 * team_U.pos.map(PRIOR_C).fillna(0.0))[thin] / (gp_ + 3)[thin]
     # positional funnel from defense
     fun = DP["funnel"]
     team_U["funnel"] = team_U.pos.map(lambda p: fun.loc[de, p] if de in fun.index and p in fun.columns else 1.0)
@@ -507,6 +520,7 @@ def run_week(d, season, week, only_game=None, lines=None, odds_key=None, skip_fi
             inj, note = injury_status(d, P, off, week)
             G = proj_game(off, de, spf, tot, vol, allowed, DP, U, inj, P)
             props = []
+            team_last = int(P["pbp"][P["pbp"].posteam == off].week.max())
             for p in G["players"]:
                 if p["proj_targets"] < 1.5 and p["proj_carries"] < 4: continue
                 sim = simulate(p)
@@ -515,6 +529,7 @@ def run_week(d, season, week, only_game=None, lines=None, odds_key=None, skip_fi
                            proj_targets=p["proj_targets"], proj_carries=p["proj_carries"], adot=p["adot"],
                            wopr=p["wopr"], snap=p["snap"], yf=p["yf"], funnel=p["funnel"], sims=sim, edges=[],
                            share_raw=p["share_raw"], gp=int(Ui.gp.get(p["id"], 0)), team=off, opp=de,
+                           id=p["id"], last_week=int(Ui.last_week.get(p["id"], 0)), team_last=team_last,
                            base={"rec_yds": Ui.ypg.get(p["id"], np.nan),
                                  "receptions": Ui.rec.get(p["id"], 0) / max(Ui.gp.get(p["id"], 1), 1),
                                  "rush_yds": Ui.rypg.get(p["id"], np.nan)})
@@ -526,29 +541,75 @@ def run_week(d, season, week, only_game=None, lines=None, odds_key=None, skip_fi
             qb_name = qb_name.iat[0] if len(qb_name) else f"{off} QB"
             qrow = dict(name=qb_name, med_pass_yds=float(np.median(qbs["pass_yds"])), med_pass_att=float(np.median(qbs["pass_att"])), sims=qbs)
             ang = angles_for(off, de, DP, vol, allowed, G, inj, U, d["cov_season"])
-            # compare to lines
-            edges = []
+            # collect real lines; probabilities are finalized after every game is projected
+            raw = []
             if len(gl):
-                allp = props + [qrow]
-                for ln in gl.itertuples():
-                    pl = next((x for x in allp if name_match(x["name"], ln.player)), None)
+                for ln in gl.drop_duplicates(subset=["player", "market"]).itertuples():
+                    pl = next((x for x in props if name_match(x["name"], ln.player)), None)
                     if pl is None or ln.market not in pl["sims"]: continue
-                    s = pl["sims"][ln.market]
-                    po = float((s > ln.line).mean()); pu = float((s < ln.line).mean())
                     oo = getattr(ln, "over_odds", -110); uo = getattr(ln, "under_odds", -110)
-                    oo = -110 if pd.isna(oo) else oo; uo = -110 if pd.isna(uo) else uo
-                    evo = po * payout(oo) - (1 - po); evu = pu * payout(uo) - (1 - pu)
-                    side, prob, ev, odds = ("Over", po, evo, oo) if evo > evu else ("Under", pu, evu, uo)
-                    edges.append(dict(player=pl["name"], market=ln.market, line=ln.line, side=side, prob=prob,
-                                      implied=implied(odds), odds=odds, ev=ev, median=float(np.median(s))))
+                    oo = -110.0 if pd.isna(oo) else float(oo); uo = -110.0 if pd.isna(uo) else float(uo)
+                    raw.append(dict(p=pl, market=ln.market, line=float(ln.line), oo=oo, uo=uo))
             sides.append(dict(off=off, de=de, G=G, props=props, qb=qrow, angles=ang, inj_note=note,
-                              inj=inj, edges=sorted(edges, key=lambda e: -e["ev"])))
+                              inj=inj, raw=raw, edges=[]))
         G_ = dict(game_id=gm.game_id, away=gm.away_team, home=gm.home_team, day=gm.weekday,
                   date=gm.gameday, time=gm.gametime, spread=sp, total=tot, sides=sides)
-        G_["picks"] = make_picks(G_)
         games.append(G_)
+    K_mkt, line_log = finalize_lines(games, season, week)
+    for G_ in games: G_["picks"] = make_picks(G_)
     return dict(season=season, week=week, games=games, thru=week - 1, cov_season=d["cov_season"], _U=Ui,
+                K_mkt=K_mkt, line_log=line_log,
                 built=datetime.now(ZoneInfo("America/New_York")).strftime("%a %b %d, %I:%M %p ET"))
+
+def novig_over(oo, uo):
+    a, b = implied(oo), implied(uo)
+    return a / (a + b)
+
+def finalize_lines(games, season, week):
+    """Turn raw sportsbook lines into honest probabilities.
+    1) Market calibration: the model's level is scaled per stat type so that, averaged over every
+       line on the board, it agrees with the books. That keeps the model's *relative* read on each
+       player (who's too high, who's too low) but drops any across-the-board bias.
+    2) Blend: final odds = W_MODEL x model + (1 - W_MODEL) x book (vig removed)."""
+    allraw = [r for g in games for s in g["sides"] for r in s["raw"]]
+    for r in allraw:  # whole-number stats get spread across their unit so scaling can move them smoothly
+        sm = r["p"]["sims"][r["market"]].astype(float)
+        if r["market"] == "receptions": sm = sm + RNG.random(len(sm)) - 0.5
+        r["base"] = sm
+    def fit_k(rr):
+        book = np.mean([novig_over(r["oo"], r["uo"]) for r in rr])
+        grid = np.arange(0.6, 1.81, 0.02)
+        return float(min(grid, key=lambda k: abs(np.mean([(r["base"] * k > r["line"]).mean() for r in rr]) - book)))
+    usable = [r for r in allraw if r["p"]["gp"] >= 3]
+    pooled = fit_k(usable) if len(usable) >= 5 else 1.0
+    K = {}
+    for mk in sorted(set(r["market"] for r in allraw)):
+        rr = [r for r in usable if r["market"] == mk]
+        K[mk] = fit_k(rr) if len(rr) >= 5 else pooled
+    log, now = [], datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M")
+    for g in games:
+        for s in g["sides"]:
+            for r in s["raw"]:
+                p, mk = r["p"], r["market"]
+                base_sim = r["base"]; kk = K.get(mk, 1.0)
+                variants = {pw: float((base_sim * kk ** pw > r["line"]).mean()) for pw in (0, 0.25, 0.5, 0.75, 1)}
+                sim = base_sim * kk ** K_POWER
+                pmo = float((sim > r["line"]).mean()); pbo = novig_over(r["oo"], r["uo"])
+                sim = p["sims"][mk] * kk ** K_POWER  # for the displayed median
+                po = W_MODEL * pmo + (1 - W_MODEL) * pbo; pu = 1 - po
+                evo = po * payout(r["oo"]) - pu; evu = pu * payout(r["uo"]) - po
+                side, prob, ev, odds = ("Over", po, evo, r["oo"]) if evo > evu else ("Under", pu, evu, r["uo"])
+                s["edges"].append(dict(player=p["name"], market=mk, line=r["line"], side=side, prob=prob, ev=ev, odds=odds,
+                                       implied=implied(odds), model_over=pmo, book_over=pbo, median=float(np.median(sim)),
+                                       gap=abs(pmo - pbo)))
+                log.append(dict(logged=now, season=season, week=week, game_id=g["game_id"], gameday=g["date"],
+                                player=p["name"], player_id=p["id"], market=mk, line=r["line"], over_odds=r["oo"],
+                                under_odds=r["uo"], model_over=round(pmo, 4), book_over=round(pbo, 4), k=K.get(mk, 1.0),
+                                k_power=K_POWER, **{f"mo_k{int(pw*100)}": round(v, 4) for pw, v in variants.items()},
+                                w_model=W_MODEL, eligible=bool(p["gp"] >= 3 and p["last_week"] >= p["team_last"]
+                                                               and p["status"] not in ("Out", "Doubtful", "IR/Reserve"))))
+            s["edges"].sort(key=lambda e: -e["ev"])
+    return K, log
 
 MK_LABEL = {"rec_yds": "rec yds", "receptions": "catches", "rush_yds": "rush yds", "pass_yds": "pass yds", "pass_att": "pass att"}
 # Books set lines near a player's typical game, not his average (big games drag averages up).
@@ -580,13 +641,18 @@ def make_picks(G):
         pl_by_name = {p["name"]: p for p in s["props"]}
         for ed in s["edges"]:
             have_line.add((ed["player"], ed["market"]))
-            if ed["ev"] >= 0.04 and ed["prob"] - ed["implied"] >= 0.05:
-                p = pl_by_name.get(ed["player"])
-                reason = pick_reason(p, ed["market"]) if p else ""
+            p = pl_by_name.get(ed["player"])
+            if p is None: continue
+            ok = (ed["ev"] >= MIN_EV and ed["gap"] <= MAX_GAP and p["gp"] >= 3
+                  and p["last_week"] >= p["team_last"] and p["status"] not in ("Out", "Doubtful", "IR/Reserve"))
+            if ok:
+                reason = pick_reason(p, ed["market"]) + f" · model {ed['model_over']*100:.0f}% over vs book {ed['book_over']*100:.0f}%"
                 picks.append(dict(kind="line", player=ed["player"], team=s["off"], market=ed["market"], side=ed["side"],
                                   line=ed["line"], odds=ed["odds"], prob=ed["prob"], implied=ed["implied"], ev=ed["ev"],
                                   median=ed["median"], reason=reason, score=ed["ev"]))
+    game_has_lines = any(s["raw"] for s in G["sides"])
     for s in G["sides"]:
+        if game_has_lines: break  # real lines beat leans; don't mix them
         for p in s["props"]:
             if p["gp"] < 3 or p["status"] in ("Out", "Doubtful"): continue
             for mk, (fld, mn) in LEAN_MIN.items():
@@ -774,19 +840,75 @@ def tune(d, season, week, first_week=4):
                 wins=W_, losses=L_, by_week=by_week,
                 strong_w=int(sum((x["po"] > .5) == x["hit_over"] for x in strong)), strong_n=len(strong))
 
+# ---------------------------------------------------------------- grading vs real sportsbook lines
+def _decide(model_over, book_over, oo, uo, w):
+    po = w * model_over + (1 - w) * book_over; pu = 1 - po
+    evo = po * payout(oo) - pu; evu = pu * payout(uo) - po
+    return ("Over", evo, oo) if evo > evu else ("Under", evu, uo)
+
+def grade_lines(d, season):
+    """Grade every logged real line from finished games. Uses the last line logged on or before
+    game day. Returns the record of picks the rules actually made, and re-fits W_MODEL."""
+    global W_MODEL, K_POWER
+    if not os.path.exists(HISTORY): return dict(n_lines=0, w=0, l=0)
+    H = pd.read_csv(HISTORY)
+    g = d["games"]; fin = g[(g.season == season) & g.home_score.notna()]
+    H = H[(H.season == season) & H.game_id.isin(fin.game_id)]
+    H = H[H.logged.astype(str).str[:10] <= H.gameday.astype(str)]
+    if H.empty: return dict(n_lines=0, w=0, l=0)
+    H = H.sort_values("logged").groupby(["game_id", "player_id", "market"]).tail(1)
+    pbp = d["pbp"]; pbp = pbp[pbp.season_type == "REG"]
+    rec = pbp[(pbp.complete_pass == 1) & pbp.receiver_player_id.notna() & (pbp.two_point_attempt != 1)]
+    ru = pbp[(pbp.rush_attempt == 1) & pbp.rusher_player_id.notna() & (pbp.two_point_attempt != 1)]
+    act = {"rec_yds": rec.groupby(["game_id", "receiver_player_id"]).yards_gained.sum(),
+           "receptions": rec.groupby(["game_id", "receiver_player_id"]).size(),
+           "rush_yds": ru.groupby(["game_id", "rusher_player_id"]).yards_gained.sum()}
+    sn = d["snaps"]; ros = d["roster"]
+    pfr2g = ros.dropna(subset=["pfr_id"]).drop_duplicates("pfr_id").set_index("pfr_id").gsis_id.to_dict()
+    played = set(zip(sn[sn.offense_snaps > 0].game_id, sn[sn.offense_snaps > 0].pfr_player_id.map(pfr2g)))
+    rows = []
+    for r in H.itertuples():
+        if r.market not in act or (r.game_id, r.player_id) not in played: continue  # DNP = void
+        a = float(act[r.market].get((r.game_id, r.player_id), 0))
+        if a == r.line: continue
+        rows.append(dict(r._asdict(), actual=a, over=a > r.line))
+    G = pd.DataFrame(rows)
+    if G.empty: return dict(n_lines=0, w=0, l=0)
+    # record: what the rules picked at the time (with the blend weight used then)
+    w_ = l_ = 0; units = 0.0
+    for r in G.itertuples():
+        side, ev, odds = _decide(r.model_over, r.book_over, r.over_odds, r.under_odds, r.w_model)
+        if not (r.eligible and ev >= MIN_EV and abs(r.model_over - r.book_over) <= MAX_GAP): continue
+        won = r.over if side == "Over" else not r.over
+        w_ += won; l_ += (not won); units += payout(odds) if won else -1
+    # re-fit how much to trust the model vs the book (log loss); needs a real sample first
+    y = G.over.values.astype(float); fitted = None
+    if len(G) >= 80:
+        def ll(w, pw):
+            mo = G[f"mo_k{pw}"].values
+            p = np.clip(w * mo + (1 - w) * G.book_over.values, 1e-4, 1 - 1e-4)
+            return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
+        fitted = min(((w, pw) for w in [0, .1, .2, .3, .4, .5, .6] for pw in [0, 25, 50, 75, 100]), key=lambda t: ll(*t))
+        W_MODEL, K_POWER = fitted[0], fitted[1] / 100
+    return dict(n_lines=len(G), w=int(w_), l=int(l_), units=units, w_model=W_MODEL, k_power=K_POWER, fitted=fitted is not None,
+                model_beats_book=bool(len(G) >= 30 and np.mean((G.model_over > G.book_over) == G.over) > .5))
+
 # ---------------------------------------------------------------- report
 CSS = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "report.css")).read() \
     if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "report.css")) else ""
 
 def e(x): return html.escape(str(x))
 
+def fmt0(x):
+    return "—" if x is None or (isinstance(x, float) and np.isnan(x)) else f"{x:.0f}"
+
 def pick_html(pk, show_game=None):
     side_cls = "over" if pk["side"] == "Over" else "under"
     head = f'<span class="pside {side_cls}">{pk["side"]} {pk["line"]:g}</span> <b>{e(pk["player"])}</b> {MK_LABEL[pk["market"]]}'
     if pk["kind"] == "line":
         odds = int(pk["odds"])
-        nums = (f'<span class="pnum">{pk["prob"]*100:.0f}% model vs {pk["implied"]*100:.0f}% book · {odds:+d} · '
-                f'EV {pk["ev"]:+.2f}/$1</span><span class="ptag line">vs book line</span>')
+        nums = (f'<span class="pnum">{pk["prob"]*100:.0f}% to hit vs {pk["implied"]*100:.0f}% break-even · {odds:+d} · '
+                f'EV {pk["ev"]*100:+.1f}%</span><span class="ptag line">vs book line</span>')
     else:
         strong = '<span class="ptag strong">strong</span>' if pk["prob"] >= 0.55 + LEAN_CONF else ""
         nums = (f'<span class="pnum">{pk["prob"]*100:.0f}% model · median {pk["median"]:.0f}</span>'
@@ -819,6 +941,17 @@ def render(R, bt=None):
           f'<div class="tune">This run\'s settings: matchup weight {P["MATCH_W"]:g} (receiving) / {P["MATCH_W_RUSH"]:g} (rushing) · '
           f'fair line = {P["FAIR_K"]["rec_yds"]:.2f}× avg rec yds, {P["FAIR_K"]["receptions"]:.2f}× catches, {P["FAIR_K"]["rush_yds"]:.2f}× rush yds · '
           f'lean cutoff {50 + P["LEAN_CONF"]*100:.0f}%</div></div>')
+    LR = R.get("line_record") or {}
+    if LR.get("n_lines"):
+        tot = LR["w"] + LR["l"]
+        rec = (f'<b>Record vs real sportsbook lines: {LR["w"]}–{LR["l"]}</b>' + (f' ({LR["units"]:+.1f} units at 1 unit per bet)' if tot else "")
+               + f'. {LR["n_lines"]} lines graded so far. ')
+        rec += (f'The model gets {LR["w_model"]*100:.0f}% of the say and the books get the rest, re-fit from those results.' if LR["fitted"]
+                else f'The model gets {W_MODEL*100:.0f}% of the say and the books get the rest. It starts re-fitting that once 80+ lines are graded.')
+    else:
+        rec = ('<b>Record vs real sportsbook lines: starts after the first graded game.</b> Every line on this page is saved and graded after kickoff. '
+               f'Until there\'s enough history, the model gets {W_MODEL*100:.0f}% of the say and the books get the rest.')
+    W(f'<div class="bt">{rec}</div>')
     allpk = [(pk, f'{g["away"]} @ {g["home"]}') for g in R["games"] for pk in g["picks"]]
     allpk.sort(key=lambda x: (x[0]["kind"] != "line", -(x[0]["ev"] or 0), -x[0]["prob"]))
     W('<section class="top"><h2 class="toph">Top picks</h2>')
@@ -863,19 +996,21 @@ def render(R, bt=None):
                   f'<td class="n">{p["tshare"]*100:.0f} / {p["tshare_l3"]*100:.0f} / <b>{p["proj_share"]*100:.0f}%</b></td>'
                   f'<td class="n">{p["proj_targets"]:.1f}</td><td class="n">{adot}</td>'
                   f'<td class="n {mcls}">{(mu-1)*100:+.0f}%</td>'
-                  f'<td class="n">{p.get("med_receptions", float("nan")):.0f}</td>'
-                  f'<td class="n">{p.get("med_rec_yds", float("nan")):.0f}</td>'
+                  f'<td class="n">{fmt0(p.get("med_receptions"))}</td>'
+                  f'<td class="n">{fmt0(p.get("med_rec_yds"))}</td>'
                   f'<td class="n">{rush}</td></tr>')
             q = s["qb"]
             W(f'<tr class="qb"><td>{e(q["name"])}</td><td>QB</td><td></td><td class="n" colspan="2">{q["med_pass_att"]:.0f} att (median)</td>'
               f'<td></td><td></td><td></td><td class="n" colspan="2">{q["med_pass_yds"]:.0f} pass yds (median)</td></tr>')
             W("</tbody></table></div>")
             if s["edges"]:
-                W('<div class="tablewrap"><table class="edges"><thead><tr><th>Bet</th><th class="n">Line</th><th class="n">Model hit %</th><th class="n">Book implied</th><th class="n">EV / $1</th></tr></thead><tbody>')
+                W('<div class="tablewrap"><table class="edges"><thead><tr><th>Bet</th><th class="n">Line</th><th class="n">Model over %</th>'
+                  '<th class="n">Book over %</th><th class="n">Blended hit %</th><th class="n">EV</th></tr></thead><tbody>')
                 for ed in s["edges"][:8]:
-                    cls = "pos" if ed["ev"] > 0.05 else ""
-                    W(f'<tr class="{cls}"><td>{e(ed["player"])} {ed["side"]} {e(ed["market"])}</td><td class="n">{ed["line"]:g} ({int(ed["odds"]):+d})</td>'
-                      f'<td class="n">{ed["prob"]*100:.0f}%</td><td class="n">{ed["implied"]*100:.0f}%</td><td class="n">{ed["ev"]:+.2f}</td></tr>')
+                    cls = "pos" if ed["ev"] >= MIN_EV and ed["gap"] <= MAX_GAP else ""
+                    W(f'<tr class="{cls}"><td>{e(ed["player"])} {ed["side"]} {MK_LABEL[ed["market"]]}</td><td class="n">{ed["line"]:g} ({int(ed["odds"]):+d})</td>'
+                      f'<td class="n">{ed["model_over"]*100:.0f}%</td><td class="n">{ed["book_over"]*100:.0f}%</td>'
+                      f'<td class="n">{ed["prob"]*100:.0f}%</td><td class="n">{ed["ev"]*100:+.1f}%</td></tr>')
                 W("</tbody></table></div>")
             W("</div>")
         W("</section>")
@@ -920,7 +1055,16 @@ def main():
                 json.dump(dict(bt, by_week=bt["by_week"]), open(os.path.join(os.path.dirname(os.path.abspath(a.out)), "tuning.json"), "w"),
                           indent=1, default=float)
         except Exception as ex: print(f"(self-tuning skipped, using defaults: {ex})", file=sys.stderr)
+    try: LR = grade_lines(d, a.season)
+    except Exception as ex: LR = None; print(f"(line grading skipped: {ex})", file=sys.stderr)
     R = run_week(d, a.season, week, a.game, lines, a.odds_key, skip_final=True)
+    R["line_record"] = LR
+    if R["line_log"]:
+        os.makedirs(os.path.dirname(HISTORY), exist_ok=True)
+        new = pd.DataFrame(R["line_log"])
+        new.to_csv(HISTORY, mode="a", index=False, header=not os.path.exists(HISTORY))
+        print(f"Logged {len(new)} lines to {HISTORY}")
+    if LR: print(f"Real-line record: {LR}")
     page = render(R, bt)
     if a.standalone:
         title, rest = page.split("\n", 1)
@@ -934,8 +1078,8 @@ def main():
     for g in R["games"]:
         for s in g["sides"]:
             for ed in s["edges"][:3]:
-                if ed["ev"] > 0.05:
-                    print(f"  EDGE: {ed['player']} {ed['side']} {ed['line']} {ed['market']}  model {ed['prob']*100:.0f}% vs book {ed['implied']*100:.0f}%")
+                if ed["ev"] >= MIN_EV and ed["gap"] <= MAX_GAP and any(pk["player"] == ed["player"] and pk["market"] == ed["market"] for pk in g["picks"]):
+                    print(f"  EDGE: {ed['player']} {ed['side']} {ed['line']} {ed['market']}  {ed['prob']*100:.0f}% to hit, EV {ed['ev']*100:+.1f}%")
 
 if __name__ == "__main__":
     main()

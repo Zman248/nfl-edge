@@ -9,7 +9,7 @@ on:
   workflow_dispatch:        # adds a "Run workflow" button for manual runs
 
 permissions:
-  contents: read
+  contents: write   # lets the run save data/lines_history.csv back to the repo
   pages: write
   id-token: write
 
@@ -36,6 +36,14 @@ jobs:
         run: |
           python nfl_edge.py --standalone --lines lines.csv --out site/index.html
           cp site/index_picks.json site/picks.json || true
+      - name: Save line history
+        run: |
+          if [ -f data/lines_history.csv ]; then
+            git config user.name "nfl-edge-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/lines_history.csv
+            git diff --cached --quiet || (git commit -m "Log prop lines" && git pull --rebase -q && git push)
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
