@@ -1,0 +1,51 @@
+name: Halftime Edge
+
+on:
+  schedule:
+    # Hourly starts from noon to midnight ET. GitHub often starts scheduled runs late, so extra starts
+    # are a safety net. Only one run is active at a time, and a run stops once the night's games are done.
+    - cron: "5 17-23 * * *"
+    - cron: "5 0-5 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "live, grade, or selftest"
+        default: "live"
+      date:
+        description: "selftest date (YYYYMMDD)"
+        default: "20260115"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: halftime
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Watch halftimes
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+        run: |
+          MODE="${{ github.event.inputs.mode || 'live' }}"
+          if [ "$MODE" = "selftest" ]; then python halftime/bot.py --selftest "${{ github.event.inputs.date }}";
+          elif [ "$MODE" = "grade" ]; then python halftime/bot.py --grade;
+          else python halftime/bot.py; fi
+      - name: Save alerts and record
+        if: always()
+        run: |
+          git config user.name "halftime-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add halftime/alerts.csv halftime/RECORD.md 2>/dev/null || true
+          git diff --cached --quiet || (git commit -q -m "Halftime alerts/record" && git pull -q --rebase && git push -q)

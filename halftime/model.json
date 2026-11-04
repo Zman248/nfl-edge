@@ -1,0 +1,20 @@
+{
+ "features": [
+  "const",
+  "logit_espn_fav_wp_half",
+  "logit_pregame_fav_prob",
+  "fav_halftime_margin/10",
+  "is_womens",
+  "fav_trailing*logit_pregame_fav_prob"
+ ],
+ "weights": [
+  0.207074,
+  0.335076,
+  0.238406,
+  1.143008,
+  0.003624,
+  -0.05613
+ ],
+ "trained_on": "NCAA men's + women's D1, 2023-24 to 2025-26 seasons",
+ "games": 35824
+}
