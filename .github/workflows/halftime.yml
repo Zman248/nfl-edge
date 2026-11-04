@@ -47,5 +47,5 @@ jobs:
         run: |
           git config user.name "halftime-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add halftime/alerts.csv halftime/RECORD.md halftime/selftest.txt 2>/dev/null || true
+          for f in halftime/alerts.csv halftime/RECORD.md halftime/selftest.txt; do [ -f "$f" ] && git add "$f"; done
           git diff --cached --quiet || (git commit -q -m "Halftime alerts/record" && git pull -q --rebase && git push -q)
