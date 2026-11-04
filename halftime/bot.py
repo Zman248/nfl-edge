@@ -18,7 +18,7 @@ Usage:
   python3 bot.py --grade         # grade past alerts only
   python3 bot.py --selftest 20250115   # replay a past date's halftimes (no emails) to check the feeds
 """
-import argparse, csv, json, math, os, smtplib, sys, time, urllib.request, urllib.parse
+import argparse, csv, json, math, os, smtplib, sys, time, urllib.request, urllib.parse, urllib.error
 from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from zoneinfo import ZoneInfo
@@ -180,12 +180,21 @@ def send_ntfy(subject, body):
     topic, to = os.environ.get("NTFY_TOPIC"), os.environ.get("ALERT_TO")
     if not topic: return False
     headers = {"Title": subject.encode("ascii", "ignore").decode(), "Priority": "high", "Tags": "basketball"}
-    if to: headers["Email"] = to
-    try:
-        req = urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers=headers, method="POST")
+    def post(h):
+        req = urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers=h, method="POST")
         with urllib.request.urlopen(req, timeout=20) as r:
-            print(f"  alert sent via ntfy ({r.status}){' + email' if to else ''}: {subject}")
-        return True
+            return r.status
+    if to:
+        try:
+            st = post(dict(headers, Email=to)); print(f"  alert sent via ntfy ({st}) + email: {subject}"); return True
+        except urllib.error.HTTPError as e:
+            print(f"  ntfy email failed: {e.code} {e.read().decode(errors='ignore')[:300]}", file=sys.stderr)
+        except Exception as e:
+            print(f"  ntfy email failed: {e}", file=sys.stderr)
+    try:
+        st = post(headers); print(f"  alert sent via ntfy push ({st}): {subject}"); return True
+    except urllib.error.HTTPError as e:
+        print(f"  ntfy failed: {e.code} {e.read().decode(errors='ignore')[:300]}", file=sys.stderr); return False
     except Exception as e:
         print(f"  ntfy failed: {e}", file=sys.stderr); return False
 
