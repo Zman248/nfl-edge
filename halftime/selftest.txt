@@ -1,1 +1,2 @@
+NTFY_TOPIC set: False | ALERT_TO set: False | GMAIL set: False
   (alerts not configured) Halftime Edge test alert
