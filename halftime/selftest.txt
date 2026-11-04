@@ -1,8 +1,18 @@
 
 == mens: 49 games on 20260115
+   DEBUG summary keys: ['againstTheSpread', 'article', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'leaders', 'meta', 'news', 'odds', 'pickcenter', 'plays', 'standings', 'videos', 'wallclockAvailable', 'winprobability']
+   DEBUG plays: 458 | first play: {"id": "401829197117414368", "sequenceNumber": "117414368", "type": {"id": "615", "text": "Jumpball"}, "text": "Start game", "awayScore": 0, "homeScore": 0, "period": {"number": 1, "displayValue": "1st Half"}, "clock": {"displayValue": "20:00"}, "scoringPlay": false, "scoreValue": 0, "wallclock": "2026-01-16T03:16:01Z", "shootingPlay": false, "coordinate": {"x": 25, "y": 0}, "pointsAttempted": 0, 
+   DEBUG winprobability: 457 | sample: {"homeWinPercentage": 0.0, "tiePercentage": 0.0, "playId": "401829197117423922"}
+   DEBUG predictor: null
+   DEBUG status: {"clock": 0.0, "displayClock": "0:00", "period": 2, "type": {"id": "3", "name": "STATUS_FINAL", "state": "post", "completed": true, "description": "Final", "detail": "Final", "shortDetail": "Final"}}
    parsed halftime for 0 games, 0 would have alerted
    ESPN odds block sample: {}
 
 == womens: 82 games on 20260115
+   DEBUG summary keys: ['againstTheSpread', 'article', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'leaders', 'meta', 'news', 'odds', 'pickcenter', 'plays', 'standings', 'videos', 'wallclockAvailable', 'winprobability']
+   DEBUG plays: 493 | first play: {"id": "401825641117361628", "sequenceNumber": "117361628", "type": {"id": "615", "text": "Jumpball"}, "text": "Start game", "awayScore": 0, "homeScore": 0, "period": {"number": 1, "displayValue": "1st Quarter"}, "clock": {"displayValue": "10:00"}, "scoringPlay": false, "scoreValue": 0, "wallclock": "2026-01-16T00:02:19Z", "shootingPlay": false, "coordinate": {"x": 25, "y": 0}, "pointsAttempted": 
+   DEBUG winprobability: 489 | sample: {"homeWinPercentage": 1.0, "tiePercentage": 0.0, "playId": "401825641117396753"}
+   DEBUG predictor: null
+   DEBUG status: {"clock": 0.0, "displayClock": "0:00", "period": 4, "type": {"id": "3", "name": "STATUS_FINAL", "state": "post", "completed": true, "description": "Final", "detail": "Final", "shortDetail": "Final"}}
    parsed halftime for 0 games, 0 would have alerted
    ESPN odds block sample: {}
