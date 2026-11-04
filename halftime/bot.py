@@ -295,6 +295,14 @@ def selftest(date):
         evs = (sb or {}).get("events", [])
         print(f"\n== {league}: {len(evs)} games on {date}")
         ok = cands = 0
+        if evs:
+            s0 = espn(league, "summary", event=evs[0]["id"]) or {}
+            pl = s0.get("plays") or []
+            print("   DEBUG summary keys:", sorted(s0.keys()))
+            print("   DEBUG plays:", len(pl), "| first play:", json.dumps(pl[0])[:400] if pl else None)
+            print("   DEBUG winprobability:", len(s0.get("winprobability") or []), "| sample:", json.dumps((s0.get("winprobability") or [None])[-1])[:200])
+            print("   DEBUG predictor:", json.dumps(s0.get("predictor"))[:300])
+            print("   DEBUG status:", json.dumps(evs[0]["status"])[:200])
         for ev in evs[:40]:
             summ = espn(league, "summary", event=ev["id"])
             plays = (summ or {}).get("plays") or []
