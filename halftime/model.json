@@ -1,20 +1,24 @@
 {
  "features": [
   "const",
-  "logit_espn_fav_wp_half",
   "logit_pregame_fav_prob",
   "fav_halftime_margin/10",
   "is_womens",
+  "margin*is_womens",
   "fav_trailing*logit_pregame_fav_prob"
  ],
  "weights": [
-  0.207074,
-  0.335076,
-  0.238406,
-  1.143008,
-  0.003624,
-  -0.05613
+  0.250618,
+  0.459835,
+  1.616563,
+  0.021724,
+  0.165638,
+  -0.05604
  ],
- "trained_on": "NCAA men's + women's D1, 2023-24 to 2025-26 seasons",
- "games": 35824
+ "spread_sd": {
+  "mens": 11.2,
+  "womens": 12.3
+ },
+ "trained_on": "NCAA men's + women's D1 final results, 2023-24 to 2025-26",
+ "games": 35825
 }

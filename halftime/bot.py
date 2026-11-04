@@ -3,10 +3,10 @@
 Halftime Edge: college basketball halftime alerts (men's + women's D1).
 
 At halftime of every game it:
-  1. reads the pregame win chance and ESPN's live win chance (free ESPN feeds)
-  2. runs a model trained on ~36,000 past games to get the fair win chance for each team
-  3. if the model disagrees with the market by enough, checks real sportsbook prices
-     (The Odds API, free tier, only when there's a candidate) and emails an alert
+  1. reads the pregame line (DraftKings via ESPN's free feed) and the halftime score
+  2. runs a model trained on ~36,000 past games' final results to get each team's fair win chance
+  3. for spots where a pregame underdog leads, compares that to real sportsbook moneylines
+     (DraftKings via ESPN, or The Odds API free tier) and emails an alert if the price is good
   4. logs every alert as a paper bet and grades it after the game
 
 Backtest summary: when a +5 or bigger pregame underdog leads at halftime, the market
@@ -34,7 +34,7 @@ LEAGUES = {
     "womens": dict(espn="womens-college-basketball", odds="basketball_wncaab", half_period=2, womens=1, label="Women's"),
 }
 # --- rules (from the backtest) ---
-CANDIDATE_EDGE = 0.05   # model must beat ESPN's live odds by 5+ points before we spend an odds lookup
+MIN_DOG_PREGAME = 0.62  # watch games where the leading team was a pregame underdog of about +3 or more
 MIN_EV = 0.03           # bet only if expected value at the real price is +3% or better
 BAND = (0.25, 0.75)     # only realistic prices (about +300 to -300)
 KELLY_FRACTION = 0.25   # suggested stake = quarter Kelly
@@ -61,8 +61,9 @@ def espn(league, path, **q):
 def logit(p):
     p = min(max(p, 1e-3), 1 - 1e-3); return math.log(p / (1 - p))
 
-def model_fav_prob(espn_fav_wp, pre_fav, fav_margin, womens):
-    x = [1, logit(espn_fav_wp), logit(pre_fav), fav_margin / 10, womens, (1 if fav_margin < 0 else 0) * logit(pre_fav)]
+def model_fav_prob(pre_fav, fav_margin, womens):
+    m = fav_margin / 10
+    x = [1, logit(pre_fav), m, womens, m * womens, (1 if fav_margin < 0 else 0) * logit(pre_fav)]
     z = sum(a * b for a, b in zip(MODEL["weights"], x))
     return 1 / (1 + math.exp(-z))
 
@@ -90,45 +91,41 @@ def teams(ev):
 
 def name(x): return x["team"].get("displayName") or x["team"].get("name")
 
-def game_inputs(league, ev, summary, wp_at_play=None):
-    """Pregame win chance, ESPN live win chance at halftime, halftime score."""
-    home, away = teams(ev)
-    pred = (summary or {}).get("predictor") or {}
+def norm_cdf(x): return 0.5 * (1 + math.erf(x / math.sqrt(2)))
+
+def pregame_home_prob(league, ev, summary):
+    """Best available pregame strength: the DraftKings spread, then ESPN's projection, then ESPN's tip-off win %."""
     try:
-        pre_home = float(pred["homeTeam"]["gameProjection"]) / 100
+        o = ev["competitions"][0]["odds"][0]
+        sp = o.get("spread")
+        if sp not in (None, ""):
+            return norm_cdf(-float(sp) / MODEL["spread_sd"][league]), f"DK spread {float(sp):+g}"
     except Exception:
-        return None, "no pregame projection"
+        pass
+    pred = (summary or {}).get("predictor") or {}
+    try: return float(pred["homeTeam"]["gameProjection"]) / 100, "ESPN projection"
+    except Exception: pass
     wps = (summary or {}).get("winprobability") or []
-    if not wps: return None, "no live win probability"
-    if wp_at_play is not None:
-        cand = [w for w in wps if str(w.get("playId")) == str(wp_at_play)]
-        if not cand: return None, "halftime play not found"
-        w = cand[0]
-    else:
-        w = wps[-1]
-    home_wp = float(w["homeWinPercentage"])
-    hs, as_ = float(home.get("score") or 0), float(away.get("score") or 0)
-    return dict(home=name(home), away=name(away), home_id=home["team"]["id"], away_id=away["team"]["id"],
-                pre_home=pre_home, home_wp=home_wp, home_score=hs, away_score=as_), None
+    if wps: return float(wps[0]["homeWinPercentage"]), "ESPN tip-off win %"
+    return None, None
+
+def game_inputs(league, ev, summary, score=None):
+    home, away = teams(ev)
+    pre_home, src = pregame_home_prob(league, ev, summary)
+    if pre_home is None: return None, "no pregame line"
+    hs, as_ = score if score else (float(home.get("score") or 0), float(away.get("score") or 0))
+    return dict(home=name(home), away=name(away), pre_home=pre_home, pre_src=src, home_score=hs, away_score=as_), None
 
 def evaluate(league, gi):
-    """Model fair chance for both teams vs ESPN live odds. Returns candidate side or None."""
+    """Spot = a pregame underdog (about +3 or more) leading at halftime. Returns the underdog side with model odds."""
     home_fav = gi["pre_home"] > 0.5
     pre_fav = gi["pre_home"] if home_fav else 1 - gi["pre_home"]
-    espn_fav = gi["home_wp"] if home_fav else 1 - gi["home_wp"]
     margin = (gi["home_score"] - gi["away_score"]) * (1 if home_fav else -1)
-    m_fav = model_fav_prob(espn_fav, pre_fav, margin, LEAGUES[league]["womens"])
-    sides = [("fav", m_fav, espn_fav), ("dog", 1 - m_fav, 1 - espn_fav)]
-    best = None
-    for side, mp, ep in sides:
-        if not (BAND[0] <= ep <= BAND[1]): continue
-        if mp - ep >= CANDIDATE_EDGE and (best is None or mp - ep > best["model_p"] - best["espn_p"]):
-            team_is_home = (side == "fav") == home_fav
-            best = dict(side=side, team=gi["home"] if team_is_home else gi["away"],
-                        opp=gi["away"] if team_is_home else gi["home"], is_home=team_is_home,
-                        model_p=mp, espn_p=ep, pre_p=pre_fav if side == "fav" else 1 - pre_fav,
-                        lead=margin if side == "fav" else -margin)
-    return best
+    if pre_fav < MIN_DOG_PREGAME or margin >= 0: return None
+    m_fav = model_fav_prob(pre_fav, margin, LEAGUES[league]["womens"])
+    dog_home = not home_fav
+    return dict(side="dog", team=gi["home"] if dog_home else gi["away"], opp=gi["away"] if dog_home else gi["home"],
+                is_home=dog_home, model_p=1 - m_fav, pre_p=1 - pre_fav, lead=-margin, pre_src=gi["pre_src"])
 
 # ---------------------------------------------------------------- real prices
 _odds_cache = {}
@@ -167,7 +164,7 @@ def espn_dk_price(ev, is_home):
     return None
 
 # ---------------------------------------------------------------- log / email
-FIELDS = ["logged_et", "league", "game_id", "date", "team", "opp", "side", "lead", "pre_p", "espn_p", "model_p",
+FIELDS = ["logged_et", "league", "game_id", "date", "team", "opp", "side", "lead", "pre_p", "book_p", "model_p",
           "price", "book", "ev", "stake_pct", "bet_at_or_better", "status", "final_team", "final_opp", "result", "profit_units"]
 
 def read_log():
@@ -194,10 +191,12 @@ def alert_text(league, gi, c, price, ev_val, stake):
     lines = [f"{LEAGUES[league]['label']} college hoops · HALFTIME",
              f"{gi['away']} {int(gi['away_score'])} @ {gi['home']} {int(gi['home_score'])}", "",
              f"BET: {c['team']} moneyline (to win the game)",
-             f"Model win chance: {c['model_p']*100:.0f}%   ·   ESPN live odds: {c['espn_p']*100:.0f}%   ·   before the game: {c['pre_p']*100:.0f}%"]
+             f"Model win chance: {c['model_p']*100:.0f}%   ·   before the game: {c['pre_p']*100:.0f}% ({c['pre_src']})"]
     if price:
-        lines += [f"Best price found: {price['price']} at {price['book']}  →  edge {ev_val*100:+.1f}%",
+        lines += [f"Best price found: {price['price']} at {price['book']} (book says {implied(price['price'])*100:.0f}%)  →  edge {ev_val*100:+.1f}%",
                   f"Suggested stake: {stake*100:.1f}% of your bankroll"]
+    else:
+        lines += ["No live price found automatically. Check your sportsbook app."]
     lines += [f"Only bet at {min_price(c['model_p'])} or better. Worse than that, skip it.", "",
               "Paper-tracking: logged and graded automatically after the game."]
     return "\n".join(lines)
@@ -229,6 +228,8 @@ def scan(seen, dry=False):
             ev_val = stake = None
             if price:
                 dec = american_to_decimal(price["price"]); ev_val = c["model_p"] * dec - 1; stake = kelly_stake(c["model_p"], dec)
+                if not (BAND[0] <= implied(price["price"]) <= BAND[1]):
+                    print(f"  {c['team']}: price {price['price']} outside realistic range, skip"); continue
                 if ev_val < MIN_EV:
                     print(f"  {c['team']}: price {price['price']} too short (EV {ev_val*100:+.1f}%), no alert"); continue
             body = alert_text(league, gi, c, price, ev_val, stake)
@@ -238,7 +239,7 @@ def scan(seen, dry=False):
                 send_email(subj, body)
                 rows.append(dict(logged_et=datetime.now(ET).strftime("%Y-%m-%d %H:%M"), league=league, game_id=gid,
                                  date=ev["date"][:10], team=c["team"], opp=c["opp"], side=c["side"], lead=int(c["lead"]),
-                                 pre_p=round(c["pre_p"], 3), espn_p=round(c["espn_p"], 3), model_p=round(c["model_p"], 3),
+                                 pre_p=round(c["pre_p"], 3), book_p=round(implied(price["price"]), 3) if price else "", model_p=round(c["model_p"], 3),
                                  price=price["price"] if price else "", book=price["book"] if price else "",
                                  ev=round(ev_val, 4) if ev_val is not None else "", stake_pct=round(stake * 100, 2) if stake else "",
                                  bet_at_or_better=min_price(c["model_p"]), status="open"))
@@ -278,11 +279,11 @@ def grade():
              f"Bets with a real book price: {sum(r['result']=='W' for r in real)}–{len(real)-sum(r['result']=='W' for r in real)}, "
              f"{sum(float(r['profit_units']) for r in real):+.2f} units. "
              "Bets without one are graded at the minimum price the alert said to accept.", "",
-             "| Date | League | Bet | Lead at half | Model | Odds | Price | Final | Result | Units |",
+             "| Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |",
              "|---|---|---|---|---|---|---|---|---|---|"]
     for r in sorted(rows, key=lambda x: x["logged_et"], reverse=True):
         lines.append(f"| {r['date']} | {LEAGUES[r['league']]['label']} | {r['team']} ML vs {r['opp']} | {r['lead']:>3} | "
-                     f"{float(r['model_p'])*100:.0f}% | {float(r['espn_p'])*100:.0f}% | {r['price'] or r['bet_at_or_better'] + ' (min)'} | "
+                     f"{float(r['model_p'])*100:.0f}% | {(str(round(float(r['book_p'])*100)) + '%') if r.get('book_p') else '—'} | {r['price'] or r['bet_at_or_better'] + ' (min)'} | "
                      f"{(str(r['final_team']) + '–' + str(r['final_opp'])) if r.get('final_team') else '—'} | {r.get('result') or 'open'} | {r.get('profit_units') or ''} |")
     open(RECORD, "w").write("\n".join(lines) + "\n")
     print(f"Record: {w}-{len(g)-w}, {units:+.2f} units")
@@ -309,18 +310,15 @@ def selftest(date):
             hp = [p for p in plays if (p.get("period") or {}).get("number") == LEAGUES[league]["half_period"]]
             if not hp: continue
             last = hp[-1]
-            home, away = teams(ev)
-            # rewind the score to halftime for the replay
-            home["score"], away["score"] = last.get("homeScore"), last.get("awayScore")
-            gi, why = game_inputs(league, ev, summ, wp_at_play=last.get("id"))
+            gi, why = game_inputs(league, ev, summ, score=(float(last.get("homeScore") or 0), float(last.get("awayScore") or 0)))
             if gi is None: continue
             ok += 1
             c = evaluate(league, gi)
             if c:
                 cands += 1
-                print(f"   CANDIDATE {gi['away']} {int(gi['away_score'])} @ {gi['home']} {int(gi['home_score'])} -> {c['team']} "
-                      f"model {c['model_p']*100:.0f}% vs ESPN {c['espn_p']*100:.0f}% (pregame {c['pre_p']*100:.0f}%), bet at {min_price(c['model_p'])}+")
-        print(f"   parsed halftime for {ok} games, {cands} would have alerted")
+                print(f"   SPOT {gi['away']} {int(gi['away_score'])} @ {gi['home']} {int(gi['home_score'])} -> {c['team']} "
+                      f"model {c['model_p']*100:.0f}% (pregame {c['pre_p']*100:.0f}% via {c['pre_src']}), bet at {min_price(c['model_p'])} or better")
+        print(f"   parsed halftime for {ok} games, {cands} spots")
         if evs:
             print("   ESPN odds block sample:", json.dumps(evs[0]["competitions"][0].get("odds", [{}])[0].get("moneyline", {}))[:300])
 

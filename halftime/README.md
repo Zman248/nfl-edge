@@ -2,7 +2,9 @@
 
 Emails you at halftime of men's and women's college basketball games when the live moneyline looks mispriced.
 
-**The edge (backtested on ~36,000 games, 2023-24 to 2025-26):** when a +5 or bigger pregame underdog leads at halftime, live odds overrate the favorite's comeback. The underdog beat its odds by 3–9 points in both men's and women's college, every season. A model trained on those games was then tested on a season it hadn't seen and beat ESPN's live odds. Real sportsbooks are sharper than ESPN, so expect a smaller edge in practice. That's why this starts as **paper betting**.
+**The idea:** when a pregame underdog (about +3 or more) leads at halftime, the favorite's comeback may be overrated. In ~36,000 games (men's + women's, 2023-24 to 2025-26), those underdogs won more often than a standard community win-probability model expected, every season.
+
+**What's not proven yet:** that **sportsbooks** misprice it. The backtest compared against a free community model, not real live odds. The model here (pregame line + halftime score) is calibrated on a season it never saw, but the real test is against live book prices. That's why this runs as **paper betting** first.
 
 **Each alert tells you:** the team to bet (moneyline), the model's win chance vs the live odds, the best real price it found (when it can), a suggested stake, and the **worst price you should accept**.
 
