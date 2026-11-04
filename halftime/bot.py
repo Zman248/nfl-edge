@@ -346,6 +346,8 @@ def main():
     a = ap.parse_args()
     if a.selftest: selftest(a.selftest); return
     if a.testalert:
+        print("NTFY_TOPIC set:", bool(os.environ.get("NTFY_TOPIC")), "| ALERT_TO set:", bool(os.environ.get("ALERT_TO")),
+              "| GMAIL set:", bool(os.environ.get("GMAIL_USER")))
         send_email("Halftime Edge test alert", "If you got this, alerts are working.\n\nReal alerts look like:\nBET: Iowa moneyline\nModel 58% · best price +120 at FanDuel · edge +28%\nOnly bet at -131 or better.")
         return
     grade()
