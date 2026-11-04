@@ -226,6 +226,8 @@ def scan(seen, dry=False):
             if not c: continue
             price = odds_api_prices(league, c["team"], c["opp"]) or espn_dk_price(ev, c["is_home"])
             ev_val = stake = None
+            if not price and not (0.30 <= c["model_p"] <= BAND[1]):
+                print(f"  {c['team']}: no price and model {c['model_p']*100:.0f}% is outside the bettable range, skip"); continue
             if price:
                 dec = american_to_decimal(price["price"]); ev_val = c["model_p"] * dec - 1; stake = kelly_stake(c["model_p"], dec)
                 if not (BAND[0] <= implied(price["price"]) <= BAND[1]):
