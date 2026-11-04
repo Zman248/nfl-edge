@@ -1,2 +1,3 @@
-NTFY_TOPIC set: False | ALERT_TO set: False | GMAIL set: False
+  ntfy failed: HTTP Error 400: Bad Request
+NTFY_TOPIC set: True | ALERT_TO set: True | GMAIL set: False
   (alerts not configured) Halftime Edge test alert
