@@ -38,6 +38,7 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_TO: ${{ secrets.ALERT_TO || vars.ALERT_TO }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC || vars.NTFY_TOPIC }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           MODE="${{ github.event.inputs.mode || 'live' }}"
           if [ "$MODE" = "selftest" ]; then python halftime/bot.py --selftest "${{ github.event.inputs.date }}" 2>&1 | tee halftime/selftest.txt;

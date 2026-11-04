@@ -175,6 +175,16 @@ def write_log(rows):
     with open(LOG, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS); w.writeheader(); [w.writerow({k: r.get(k, "") for k in FIELDS}) for r in rows]
 
+def send_ntfy_push(subject, body):
+    topic = os.environ.get("NTFY_TOPIC")
+    headers = {"Title": subject.encode("ascii", "ignore").decode(), "Priority": "high", "Tags": "basketball"}
+    try:
+        req = urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=20) as r:
+            print(f"  pushed via ntfy ({r.status}): {subject}"); return True
+    except Exception as e:
+        print(f"  ntfy push failed: {e}", file=sys.stderr); return False
+
 def send_ntfy(subject, body):
     """Free alerts via ntfy.sh: push to the ntfy phone app, plus an email copy if ALERT_TO is set."""
     topic, to = os.environ.get("NTFY_TOPIC"), os.environ.get("ALERT_TO")
@@ -198,10 +208,30 @@ def send_ntfy(subject, body):
     except Exception as e:
         print(f"  ntfy failed: {e}", file=sys.stderr); return False
 
+def send_resend(subject, body):
+    """Email via Resend's free tier (sends from onboarding@resend.dev to the account's own address)."""
+    key, to = os.environ.get("RESEND_API_KEY"), os.environ.get("ALERT_TO")
+    if not (key and to): return False
+    data = json.dumps({"from": "Halftime Edge <onboarding@resend.dev>", "to": [to], "subject": subject, "text": body}).encode()
+    req = urllib.request.Request("https://api.resend.com/emails", data=data, method="POST",
+                                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json", **UA})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            print(f"  emailed via Resend ({r.status}): {subject}"); return True
+    except urllib.error.HTTPError as e:
+        print(f"  Resend failed: {e.code} {e.read().decode(errors='ignore')[:300]}", file=sys.stderr)
+    except Exception as e:
+        print(f"  Resend failed: {e}", file=sys.stderr)
+    return False
+
 def send_email(subject, body):
+    """Send every alert through every channel that's set up: Resend email, ntfy push, Gmail."""
     user, pw, to = os.environ.get("GMAIL_USER"), os.environ.get("GMAIL_APP_PASSWORD"), os.environ.get("ALERT_TO") or os.environ.get("GMAIL_USER")
+    sent = send_resend(subject, body)
+    if os.environ.get("NTFY_TOPIC"):
+        sent = send_ntfy_push(subject, body) or sent
     if not (user and pw):
-        if not send_ntfy(subject, body): print(f"  (alerts not configured) {subject}")
+        if not sent: print(f"  (alerts not configured) {subject}")
         return
     msg = MIMEText(body); msg["Subject"] = subject; msg["From"] = user; msg["To"] = to
     try:
@@ -356,7 +386,7 @@ def main():
     if a.selftest: selftest(a.selftest); return
     if a.testalert:
         print("NTFY_TOPIC set:", bool(os.environ.get("NTFY_TOPIC")), "| ALERT_TO set:", bool(os.environ.get("ALERT_TO")),
-              "| GMAIL set:", bool(os.environ.get("GMAIL_USER")))
+              "| RESEND set:", bool(os.environ.get("RESEND_API_KEY")), "| GMAIL set:", bool(os.environ.get("GMAIL_USER")))
         send_email("Halftime Edge test alert", "If you got this, alerts are working.\n\nReal alerts look like:\nBET: Iowa moneyline\nModel 58% · best price +120 at FanDuel · edge +28%\nOnly bet at -131 or better.")
         return
     grade()
