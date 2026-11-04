@@ -1,4 +1,3 @@
-  ntfy email failed: 400 {"code":40053,"http":400,"error":"invalid request: anonymous email sending is not allowed","link":"https://ntfy.sh/docs/publish/#e-mail-notifications"}
-
-NTFY_TOPIC set: True | ALERT_TO set: True | GMAIL set: False
-  alert sent via ntfy push (200): Halftime Edge test alert
+NTFY_TOPIC set: True | ALERT_TO set: True | RESEND set: True | GMAIL set: False
+  emailed via Resend (200): Halftime Edge test alert
+  pushed via ntfy (200): Halftime Edge test alert
