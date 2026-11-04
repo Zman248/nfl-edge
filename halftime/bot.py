@@ -175,10 +175,25 @@ def write_log(rows):
     with open(LOG, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS); w.writeheader(); [w.writerow({k: r.get(k, "") for k in FIELDS}) for r in rows]
 
+def send_ntfy(subject, body):
+    """Free alerts via ntfy.sh: push to the ntfy phone app, plus an email copy if ALERT_TO is set."""
+    topic, to = os.environ.get("NTFY_TOPIC"), os.environ.get("ALERT_TO")
+    if not topic: return False
+    headers = {"Title": subject.encode("ascii", "ignore").decode(), "Priority": "high", "Tags": "basketball"}
+    if to: headers["Email"] = to
+    try:
+        req = urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=20) as r:
+            print(f"  alert sent via ntfy ({r.status}){' + email' if to else ''}: {subject}")
+        return True
+    except Exception as e:
+        print(f"  ntfy failed: {e}", file=sys.stderr); return False
+
 def send_email(subject, body):
     user, pw, to = os.environ.get("GMAIL_USER"), os.environ.get("GMAIL_APP_PASSWORD"), os.environ.get("ALERT_TO") or os.environ.get("GMAIL_USER")
     if not (user and pw):
-        print(f"  (email not configured) {subject}"); return
+        if not send_ntfy(subject, body): print(f"  (alerts not configured) {subject}")
+        return
     msg = MIMEText(body); msg["Subject"] = subject; msg["From"] = user; msg["To"] = to
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as s:
@@ -327,9 +342,12 @@ def selftest(date):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--once", action="store_true"); ap.add_argument("--grade", action="store_true")
-    ap.add_argument("--selftest"); ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--selftest"); ap.add_argument("--dry", action="store_true"); ap.add_argument("--testalert", action="store_true")
     a = ap.parse_args()
     if a.selftest: selftest(a.selftest); return
+    if a.testalert:
+        send_email("Halftime Edge test alert", "If you got this, alerts are working.\n\nReal alerts look like:\nBET: Iowa moneyline\nModel 58% · best price +120 at FanDuel · edge +28%\nOnly bet at -131 or better.")
+        return
     grade()
     if a.grade: return
     seen, start, idle = set(), time.time(), 0

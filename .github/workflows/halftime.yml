@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "live, grade, or selftest"
+        description: "live, grade, selftest, or testalert"
         default: "live"
       date:
         description: "selftest date (YYYYMMDD)"
@@ -37,10 +37,12 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
           MODE="${{ github.event.inputs.mode || 'live' }}"
           if [ "$MODE" = "selftest" ]; then python halftime/bot.py --selftest "${{ github.event.inputs.date }}" 2>&1 | tee halftime/selftest.txt;
           elif [ "$MODE" = "grade" ]; then python halftime/bot.py --grade;
+          elif [ "$MODE" = "testalert" ]; then python halftime/bot.py --testalert 2>&1 | tee halftime/selftest.txt;
           else python halftime/bot.py; fi
       - name: Save alerts and record
         if: always()

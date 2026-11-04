@@ -11,9 +11,10 @@ Emails you at halftime of men's and women's college basketball games when the li
 **Record:** every alert is logged in `alerts.csv` and graded after the game. See [RECORD.md](RECORD.md).
 
 ## Setup (repo Settings → Secrets and variables → Actions → New repository secret)
-- `GMAIL_USER`: your Gmail address
-- `GMAIL_APP_PASSWORD`: a Gmail *app password* (Google Account → Security → 2-Step Verification → App passwords). This is not your normal password.
-- `ALERT_TO`: optional, where to send alerts (defaults to GMAIL_USER)
+- `NTFY_TOPIC`: a private channel name only you know (alerts go through the free ntfy.sh service)
+- `ALERT_TO`: your email address, so each alert is also emailed to you
+- Optional: install the **ntfy** phone app and subscribe to the same topic for push notifications
+- (Alternative: `GMAIL_USER` + `GMAIL_APP_PASSWORD` if your Google account offers app passwords)
 - `ODDS_API_KEY`: already set. It's used only when there's a candidate bet, so it stays inside the free 500/month.
 
 ## Run it by hand
