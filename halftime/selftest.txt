@@ -5,7 +5,19 @@
    DEBUG winprobability: 457 | sample: {"homeWinPercentage": 0.0, "tiePercentage": 0.0, "playId": "401829197117423922"}
    DEBUG predictor: null
    DEBUG status: {"clock": 0.0, "displayClock": "0:00", "period": 2, "type": {"id": "3", "name": "STATUS_FINAL", "state": "post", "completed": true, "description": "Final", "detail": "Final", "shortDetail": "Final"}}
-   parsed halftime for 0 games, 0 would have alerted
+   SPOT NJIT Highlanders 36 @ UMass Lowell River Hawks 17 -> NJIT Highlanders model 90% (pregame 17% via ESPN tip-off win %), bet at -679 or better
+   SPOT Youngstown State Penguins 43 @ Wright State Raiders 42 -> Youngstown State Penguins model 35% (pregame 21% via ESPN tip-off win %), bet at +195 or better
+   SPOT Drexel Dragons 38 @ Monmouth Hawks 19 -> Drexel Dragons model 92% (pregame 27% via ESPN tip-off win %), bet at -819 or better
+   SPOT Hofstra Pride 25 @ Stony Brook Seawolves 32 -> Stony Brook Seawolves model 60% (pregame 23% via ESPN tip-off win %), bet at -138 or better
+   SPOT The Citadel Bulldogs 33 @ UNC Greensboro Spartans 19 -> The Citadel Bulldogs model 74% (pregame 9% via ESPN tip-off win %), bet at -259 or better
+   SPOT Old Dominion Monarchs 48 @ Georgia Southern Eagles 39 -> Old Dominion Monarchs model 72% (pregame 36% via ESPN tip-off win %), bet at -237 or better
+   SPOT Queens University Royals 41 @ Florida Gulf Coast Eagles 33 -> Queens University Royals model 67% (pregame 31% via ESPN tip-off win %), bet at -188 or better
+   SPOT North Florida Ospreys 48 @ North Alabama Lions 36 -> North Florida Ospreys model 77% (pregame 24% via ESPN tip-off win %), bet at -302 or better
+   SPOT Jacksonville Dolphins 35 @ Central Arkansas Bears 25 -> Jacksonville Dolphins model 76% (pregame 36% via ESPN tip-off win %), bet at -277 or better
+   SPOT Eastern Kentucky Colonels 38 @ Austin Peay Governors 37 -> Eastern Kentucky Colonels model 36% (pregame 23% via ESPN tip-off win %), bet at +185 or better
+   SPOT Eastern Illinois Panthers 37 @ Little Rock Trojans 30 -> Eastern Illinois Panthers model 63% (pregame 29% via ESPN tip-off win %), bet at -155 or better
+   SPOT Eastern Washington Eagles 44 @ Weber State Wildcats 42 -> Eastern Washington Eagles model 39% (pregame 21% via ESPN tip-off win %), bet at +167 or better
+   parsed halftime for 40 games, 12 spots
    ESPN odds block sample: {}
 
 == womens: 82 games on 20260115
@@ -14,5 +26,18 @@
    DEBUG winprobability: 489 | sample: {"homeWinPercentage": 1.0, "tiePercentage": 0.0, "playId": "401825641117396753"}
    DEBUG predictor: null
    DEBUG status: {"clock": 0.0, "displayClock": "0:00", "period": 4, "type": {"id": "3", "name": "STATUS_FINAL", "state": "post", "completed": true, "description": "Final", "detail": "Final", "shortDetail": "Final"}}
-   parsed halftime for 0 games, 0 would have alerted
+   SPOT Alabama Crimson Tide 29 @ Auburn Tigers 30 -> Auburn Tigers model 28% (pregame 11% via ESPN tip-off win %), bet at +268 or better
+   SPOT UMass Lowell River Hawks 32 @ NJIT Highlanders 31 -> UMass Lowell River Hawks model 25% (pregame 8% via ESPN tip-off win %), bet at +310 or better
+   SPOT Morehead State Eagles 30 @ Tennessee State Lady Tigers 35 -> Tennessee State Lady Tigers model 54% (pregame 24% via ESPN tip-off win %), bet at -110 or better
+   SPOT Bryant Bulldogs 20 @ UMBC Retrievers 25 -> UMBC Retrievers model 55% (pregame 26% via ESPN tip-off win %), bet at -113 or better
+   SPOT NC State Wolfpack 43 @ Wake Forest Demon Deacons 49 -> Wake Forest Demon Deacons model 42% (pregame 6% via ESPN tip-off win %), bet at +147 or better
+   SPOT IU Indianapolis Jaguars 35 @ Robert Morris Colonials 34 -> IU Indianapolis Jaguars model 38% (pregame 27% via ESPN tip-off win %), bet at +173 or better
+   SPOT Western Carolina Catamounts 40 @ Wofford Terriers 31 -> Western Carolina Catamounts model 63% (pregame 12% via ESPN tip-off win %), bet at -155 or better
+   SPOT Eastern Illinois Panthers 22 @ Little Rock Trojans 20 -> Eastern Illinois Panthers model 43% (pregame 28% via ESPN tip-off win %), bet at +142 or better
+   SPOT Lipscomb Bisons 34 @ Eastern Kentucky Colonels 31 -> Lipscomb Bisons model 35% (pregame 10% via ESPN tip-off win %), bet at +197 or better
+   SPOT Southern Indiana Screaming Eagles 27 @ Tennessee Tech Golden Eagles 29 -> Tennessee Tech Golden Eagles model 45% (pregame 32% via ESPN tip-off win %), bet at +131 or better
+   SPOT SIU Edwardsville Cougars 25 @ UT Martin Skyhawks 21 -> SIU Edwardsville Cougars model 50% (pregame 25% via ESPN tip-off win %), bet at +106 or better
+   SPOT Texas Southern Tigers 36 @ Jackson State Lady Tigers 24 -> Texas Southern Tigers model 81% (pregame 27% via ESPN tip-off win %), bet at -372 or better
+   SPOT Miami Hurricanes 34 @ North Carolina Tar Heels 32 -> Miami Hurricanes model 31% (pregame 10% via ESPN tip-off win %), bet at +237 or better
+   parsed halftime for 40 games, 13 spots
    ESPN odds block sample: {}
