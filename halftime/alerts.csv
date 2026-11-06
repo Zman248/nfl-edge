@@ -1,2 +1,10 @@
 logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book,ev,stake_pct,bet_at_or_better,status,final_team,final_opp,result,profit_units
 2026-11-04 21:43,womens,401921577,2026-11-05,California Baptist Lancers,Oregon State Beavers,dog,4,0.059,,0.337,,,,,+206,graded,79,77,W,2.06
+2026-11-05 18:40,womens,401920143,2026-11-05,Dartmouth Big Green,Holy Cross Crusaders,dog,4,0.134,,0.422,,,,,+144,graded,46,49,L,-1
+2026-11-05 19:46,mens,401924733,2026-11-06,Hofstra Pride,Princeton Tigers,dog,7,0.34,0.583,0.649,-140,BetMGM,0.112,3.0,-170,graded,58,60,L,-1
+2026-11-05 19:53,mens,401919732,2026-11-06,Chicago State Cougars,Incarnate Word Cardinals,dog,12,0.247,0.574,0.775,-135,Bovada,0.3498,3.0,-305,graded,66,54,W,0.741
+2026-11-05 20:05,mens,401921678,2026-11-06,UAlbany Great Danes,Manhattan Jaspers,dog,1,0.326,,0.406,,,,,+154,graded,72,68,W,1.54
+2026-11-05 20:05,mens,401909706,2026-11-06,Buffalo Bulls,Pittsburgh Panthers,dog,13,0.065,0.488,0.684,105,Bovada,0.4031,3.0,-198,graded,61,80,L,-1
+2026-11-05 20:08,womens,401921452,2026-11-06,Eastern Michigan Eagles,Purdue Boilermakers,dog,3,0.066,,0.308,,,,,+234,graded,73,83,L,-1
+2026-11-05 20:50,womens,401923188,2026-11-06,Pepperdine Waves,UC Santa Barbara Gauchos,dog,2,0.361,,0.463,,,,,+122,graded,54,58,L,-1
+2026-11-05 22:02,womens,401916150,2026-11-06,Portland Pilots,BYU Cougars,dog,6,0.373,0.312,0.643,220,BetMGM,1.0568,3.0,-166,graded,64,74,L,-1
