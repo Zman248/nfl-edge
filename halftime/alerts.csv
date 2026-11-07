@@ -17,4 +17,4 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-06 20:45,mens,401928823,2026-11-07,Robert Morris Colonials,UIC Flames,dog,2,0.139,0.278,0.34,260,DraftKings,0.2237,2.15,+203,graded,56,79,L,-1
 2026-11-06 21:11,womens,401926999,2026-11-07,Portland State Vikings,Boise State Broncos,dog,3,0.088,,0.336,,,,,+207,graded,68,83,L,-1
 2026-11-06 21:16,womens,401913831,2026-11-07,Rice Owls,Murray State Racers,dog,6,0.341,,0.63,,,,,-157,graded,69,64,W,0.637
-2026-11-06 22:42,womens,401903554,2026-11-07,Washington State Cougars,Oregon Ducks,dog,14,0.031,0.278,0.697,260,BetMGM,1.509,3.0,-209,open,,,,
+2026-11-06 22:42,womens,401903554,2026-11-07,Washington State Cougars,Oregon Ducks,dog,14,0.031,0.278,0.697,260,BetMGM,1.509,3.0,-209,graded,57,64,L,-1

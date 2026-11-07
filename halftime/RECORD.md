@@ -1,14 +1,14 @@
 # Halftime Edge: paper record
 
-Updated Fri Nov 06, 10:44 PM ET
+Updated Sat Nov 07, 10:16 AM ET
 
-**Record: 6–12**, **-5.21 units** (1 unit per bet), 18 graded, 1 open.
+**Record: 6–13**, **-6.21 units** (1 unit per bet), 19 graded, 0 open.
 
-Bets with a real book price: 1–5, -4.26 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 1–6, -5.26 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-07 | Women's | Washington State Cougars ML vs Oregon Ducks |  14 | 70% | 28% | 260 | — | open |  |
+| 2026-11-07 | Women's | Washington State Cougars ML vs Oregon Ducks |  14 | 70% | 28% | 260 | 57–64 | L | -1 |
 | 2026-11-07 | Women's | Rice Owls ML vs Murray State Racers |   6 | 63% | — | -157 (min) | 69–64 | W | 0.637 |
 | 2026-11-07 | Women's | Portland State Vikings ML vs Boise State Broncos |   3 | 34% | — | +207 (min) | 68–83 | L | -1 |
 | 2026-11-07 | Men's | Robert Morris Colonials ML vs UIC Flames |   2 | 34% | 28% | 260 | 56–79 | L | -1 |
