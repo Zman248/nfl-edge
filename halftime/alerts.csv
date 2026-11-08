@@ -18,3 +18,7 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-06 21:11,womens,401926999,2026-11-07,Portland State Vikings,Boise State Broncos,dog,3,0.088,,0.336,,,,,+207,graded,68,83,L,-1
 2026-11-06 21:16,womens,401913831,2026-11-07,Rice Owls,Murray State Racers,dog,6,0.341,,0.63,,,,,-157,graded,69,64,W,0.637
 2026-11-06 22:42,womens,401903554,2026-11-07,Washington State Cougars,Oregon Ducks,dog,14,0.031,0.278,0.697,260,BetMGM,1.509,3.0,-209,graded,57,64,L,-1
+2026-11-07 15:50,womens,401911505,2026-11-07,Radford Highlanders,Eastern Kentucky Colonels,dog,4,0.365,,0.554,,,,,-116,graded,56,65,L,-1
+2026-11-07 19:10,womens,401917689,2026-11-07,San Diego Toreros,UC San Diego Tritons,dog,8,0.154,0.4,0.614,150,BetRivers,0.5358,3.0,-148,graded,88,90,L,-1
+2026-11-07 20:02,mens,401911186,2026-11-08,Northern Illinois Huskies,Dayton Flyers,dog,11,0.037,0.408,0.553,145,DraftKings,0.3541,3.0,-116,open,,,,
+2026-11-07 20:56,mens,401920816,2026-11-08,SE Louisiana Lions,Little Rock Trojans,dog,7,0.227,,0.595,,,,,-137,open,,,,

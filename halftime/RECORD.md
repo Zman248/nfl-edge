@@ -1,13 +1,17 @@
 # Halftime Edge: paper record
 
-Updated Sat Nov 07, 10:16 AM ET
+Updated Sat Nov 07, 09:29 PM ET
 
-**Record: 6–13**, **-6.21 units** (1 unit per bet), 19 graded, 0 open.
+**Record: 6–15**, **-8.21 units** (1 unit per bet), 21 graded, 2 open.
 
-Bets with a real book price: 1–6, -5.26 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 1–7, -6.26 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-08 | Men's | SE Louisiana Lions ML vs Little Rock Trojans |   7 | 60% | — | -137 (min) | — | open |  |
+| 2026-11-08 | Men's | Northern Illinois Huskies ML vs Dayton Flyers |  11 | 55% | 41% | 145 | — | open |  |
+| 2026-11-07 | Women's | San Diego Toreros ML vs UC San Diego Tritons |   8 | 61% | 40% | 150 | 88–90 | L | -1 |
+| 2026-11-07 | Women's | Radford Highlanders ML vs Eastern Kentucky Colonels |   4 | 55% | — | -116 (min) | 56–65 | L | -1 |
 | 2026-11-07 | Women's | Washington State Cougars ML vs Oregon Ducks |  14 | 70% | 28% | 260 | 57–64 | L | -1 |
 | 2026-11-07 | Women's | Rice Owls ML vs Murray State Racers |   6 | 63% | — | -157 (min) | 69–64 | W | 0.637 |
 | 2026-11-07 | Women's | Portland State Vikings ML vs Boise State Broncos |   3 | 34% | — | +207 (min) | 68–83 | L | -1 |
