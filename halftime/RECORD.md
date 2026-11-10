@@ -1,13 +1,19 @@
 # Halftime Edge: paper record
 
-Updated Mon Nov 09, 09:17 AM ET
+Updated Tue Nov 10, 01:22 AM ET
 
-**Record: 8–15**, **-6.03 units** (1 unit per bet), 23 graded, 0 open.
+**Record: 9–19**, **-9.52 units** (1 unit per bet), 28 graded, 1 open.
 
-Bets with a real book price: 2–7, -4.81 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 2–9, -6.81 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-10 | Men's | Portland Pilots ML vs Hawai'i Rainbow Warriors |   4 | 47% | 40% | 150 | — | open |  |
+| 2026-11-10 | Women's | Creighton Bluejays ML vs North Dakota State Bison |   7 | 68% | — | -195 (min) | 66–60 | W | 0.513 |
+| 2026-11-10 | Women's | Omaha Mavericks ML vs Western Illinois Leathernecks |   7 | 62% | — | -152 (min) | 54–57 | L | -1 |
+| 2026-11-10 | Women's | Longwood Lancers ML vs Charlotte 49ers |   5 | 52% | — | -101 (min) | 72–86 | L | -1 |
+| 2026-11-09 | Men's | Howard Bison ML vs Pennsylvania Quakers |   6 | 59% | 54% | -115 | 65–78 | L | -1 |
+| 2026-11-09 | Men's | Syracuse Orange ML vs Indiana Hoosiers |   4 | 52% | 49% | 105 | 80–83 | L | -1 |
 | 2026-11-08 | Men's | SE Louisiana Lions ML vs Little Rock Trojans |   7 | 60% | — | -137 (min) | 83–79 | W | 0.73 |
 | 2026-11-08 | Men's | Northern Illinois Huskies ML vs Dayton Flyers |  11 | 55% | 41% | 145 | 81–76 | W | 1.45 |
 | 2026-11-07 | Women's | San Diego Toreros ML vs UC San Diego Tritons |   8 | 61% | 40% | 150 | 88–90 | L | -1 |
