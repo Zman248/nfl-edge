@@ -27,4 +27,4 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-09 19:49,womens,401922324,2026-11-10,Longwood Lancers,Charlotte 49ers,dog,5,0.206,,0.518,,,,,-101,graded,72,86,L,-1
 2026-11-09 20:21,womens,401918782,2026-11-10,Omaha Mavericks,Western Illinois Leathernecks,dog,7,0.233,,0.621,,,,,-152,graded,54,57,L,-1
 2026-11-09 20:43,womens,401911791,2026-11-10,Creighton Bluejays,North Dakota State Bison,dog,7,0.367,,0.68,,,,,-195,graded,66,60,W,0.513
-2026-11-10 00:55,mens,401929003,2026-11-10,Portland Pilots,Hawai'i Rainbow Warriors,dog,4,0.211,0.4,0.466,150,Bovada,0.1648,2.75,+121,open,,,,
+2026-11-10 00:55,mens,401929003,2026-11-10,Portland Pilots,Hawai'i Rainbow Warriors,dog,4,0.211,0.4,0.466,150,Bovada,0.1648,2.75,+121,graded,73,66,W,1.5

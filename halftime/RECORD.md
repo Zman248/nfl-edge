@@ -1,14 +1,14 @@
 # Halftime Edge: paper record
 
-Updated Tue Nov 10, 01:22 AM ET
+Updated Tue Nov 10, 07:48 AM ET
 
-**Record: 9–19**, **-9.52 units** (1 unit per bet), 28 graded, 1 open.
+**Record: 10–19**, **-8.02 units** (1 unit per bet), 29 graded, 0 open.
 
-Bets with a real book price: 2–9, -6.81 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 3–9, -5.31 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-10 | Men's | Portland Pilots ML vs Hawai'i Rainbow Warriors |   4 | 47% | 40% | 150 | — | open |  |
+| 2026-11-10 | Men's | Portland Pilots ML vs Hawai'i Rainbow Warriors |   4 | 47% | 40% | 150 | 73–66 | W | 1.5 |
 | 2026-11-10 | Women's | Creighton Bluejays ML vs North Dakota State Bison |   7 | 68% | — | -195 (min) | 66–60 | W | 0.513 |
 | 2026-11-10 | Women's | Omaha Mavericks ML vs Western Illinois Leathernecks |   7 | 62% | — | -152 (min) | 54–57 | L | -1 |
 | 2026-11-10 | Women's | Longwood Lancers ML vs Charlotte 49ers |   5 | 52% | — | -101 (min) | 72–86 | L | -1 |
