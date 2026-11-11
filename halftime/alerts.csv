@@ -28,3 +28,9 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-09 20:21,womens,401918782,2026-11-10,Omaha Mavericks,Western Illinois Leathernecks,dog,7,0.233,,0.621,,,,,-152,graded,54,57,L,-1
 2026-11-09 20:43,womens,401911791,2026-11-10,Creighton Bluejays,North Dakota State Bison,dog,7,0.367,,0.68,,,,,-195,graded,66,60,W,0.513
 2026-11-10 00:55,mens,401929003,2026-11-10,Portland Pilots,Hawai'i Rainbow Warriors,dog,4,0.211,0.4,0.466,150,Bovada,0.1648,2.75,+121,graded,73,66,W,1.5
+2026-11-10 19:45,mens,401921755,2026-11-11,South Alabama Jaguars,UCF Knights,dog,2,0.101,0.278,0.308,260,DraftKings,0.1084,1.04,+235,graded,69,76,L,-1
+2026-11-10 19:46,womens,401925980,2026-11-11,South Carolina State Lady Bulldogs,South Carolina Upstate Spartans,dog,4,0.217,,0.481,,,,,+114,graded,50,54,L,-1
+2026-11-10 19:56,mens,401925708,2026-11-11,Winthrop Eagles,Kennesaw State Owls,dog,1,0.192,0.278,0.339,260,DraftKings,0.2192,2.11,+204,graded,79,88,L,-1
+2026-11-10 19:58,mens,401909564,2026-11-11,Michigan State Spartans,Duke Blue Devils,dog,9,0.265,0.6,0.688,-150,Bovada,0.1472,3.0,-201,graded,79,73,W,0.667
+2026-11-10 21:44,mens,401921699,2026-11-11,Weber State Wildcats,Utah Utes,dog,7,0.062,0.294,0.446,240,FanDuel,0.5171,3.0,+131,graded,64,85,L,-1
+2026-11-10 21:46,mens,401909761,2026-11-11,San Diego Toreros,Colorado Buffaloes,dog,3,0.069,0.282,0.307,255,FanDuel,0.0882,0.86,+236,open,,,,

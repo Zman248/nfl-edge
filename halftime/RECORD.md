@@ -1,13 +1,19 @@
 # Halftime Edge: paper record
 
-Updated Tue Nov 10, 07:48 AM ET
+Updated Tue Nov 10, 10:59 PM ET
 
-**Record: 10–19**, **-8.02 units** (1 unit per bet), 29 graded, 0 open.
+**Record: 11–23**, **-11.35 units** (1 unit per bet), 34 graded, 1 open.
 
-Bets with a real book price: 3–9, -5.31 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 4–12, -7.64 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-11 | Men's | San Diego Toreros ML vs Colorado Buffaloes |   3 | 31% | 28% | 255 | — | open |  |
+| 2026-11-11 | Men's | Weber State Wildcats ML vs Utah Utes |   7 | 45% | 29% | 240 | 64–85 | L | -1 |
+| 2026-11-11 | Men's | Michigan State Spartans ML vs Duke Blue Devils |   9 | 69% | 60% | -150 | 79–73 | W | 0.667 |
+| 2026-11-11 | Men's | Winthrop Eagles ML vs Kennesaw State Owls |   1 | 34% | 28% | 260 | 79–88 | L | -1 |
+| 2026-11-11 | Women's | South Carolina State Lady Bulldogs ML vs South Carolina Upstate Spartans |   4 | 48% | — | +114 (min) | 50–54 | L | -1 |
+| 2026-11-11 | Men's | South Alabama Jaguars ML vs UCF Knights |   2 | 31% | 28% | 260 | 69–76 | L | -1 |
 | 2026-11-10 | Men's | Portland Pilots ML vs Hawai'i Rainbow Warriors |   4 | 47% | 40% | 150 | 73–66 | W | 1.5 |
 | 2026-11-10 | Women's | Creighton Bluejays ML vs North Dakota State Bison |   7 | 68% | — | -195 (min) | 66–60 | W | 0.513 |
 | 2026-11-10 | Women's | Omaha Mavericks ML vs Western Illinois Leathernecks |   7 | 62% | — | -152 (min) | 54–57 | L | -1 |
