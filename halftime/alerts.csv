@@ -33,4 +33,4 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-10 19:56,mens,401925708,2026-11-11,Winthrop Eagles,Kennesaw State Owls,dog,1,0.192,0.278,0.339,260,DraftKings,0.2192,2.11,+204,graded,79,88,L,-1
 2026-11-10 19:58,mens,401909564,2026-11-11,Michigan State Spartans,Duke Blue Devils,dog,9,0.265,0.6,0.688,-150,Bovada,0.1472,3.0,-201,graded,79,73,W,0.667
 2026-11-10 21:44,mens,401921699,2026-11-11,Weber State Wildcats,Utah Utes,dog,7,0.062,0.294,0.446,240,FanDuel,0.5171,3.0,+131,graded,64,85,L,-1
-2026-11-10 21:46,mens,401909761,2026-11-11,San Diego Toreros,Colorado Buffaloes,dog,3,0.069,0.282,0.307,255,FanDuel,0.0882,0.86,+236,open,,,,
+2026-11-10 21:46,mens,401909761,2026-11-11,San Diego Toreros,Colorado Buffaloes,dog,3,0.069,0.282,0.307,255,FanDuel,0.0882,0.86,+236,graded,75,83,L,-1

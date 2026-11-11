@@ -1,14 +1,14 @@
 # Halftime Edge: paper record
 
-Updated Tue Nov 10, 10:59 PM ET
+Updated Wed Nov 11, 10:31 AM ET
 
-**Record: 11–23**, **-11.35 units** (1 unit per bet), 34 graded, 1 open.
+**Record: 11–24**, **-12.35 units** (1 unit per bet), 35 graded, 0 open.
 
-Bets with a real book price: 4–12, -7.64 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 4–13, -8.64 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-11 | Men's | San Diego Toreros ML vs Colorado Buffaloes |   3 | 31% | 28% | 255 | — | open |  |
+| 2026-11-11 | Men's | San Diego Toreros ML vs Colorado Buffaloes |   3 | 31% | 28% | 255 | 75–83 | L | -1 |
 | 2026-11-11 | Men's | Weber State Wildcats ML vs Utah Utes |   7 | 45% | 29% | 240 | 64–85 | L | -1 |
 | 2026-11-11 | Men's | Michigan State Spartans ML vs Duke Blue Devils |   9 | 69% | 60% | -150 | 79–73 | W | 0.667 |
 | 2026-11-11 | Men's | Winthrop Eagles ML vs Kennesaw State Owls |   1 | 34% | 28% | 260 | 79–88 | L | -1 |
