@@ -1,13 +1,18 @@
 # Halftime Edge: paper record
 
-Updated Wed Nov 11, 10:31 AM ET
+Updated Thu Nov 12, 12:09 AM ET
 
-**Record: 11–24**, **-12.35 units** (1 unit per bet), 35 graded, 0 open.
+**Record: 14–26**, **-9.36 units** (1 unit per bet), 40 graded, 0 open.
 
-Bets with a real book price: 4–13, -8.64 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 5–14, -7.34 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-12 | Men's | UMass Lowell River Hawks ML vs Massachusetts Minutemen |   6 | 59% | 55% | -120 | 62–72 | L | -1 |
+| 2026-11-12 | Women's | Bryant Bulldogs ML vs Providence Friars |   6 | 64% | — | -166 (min) | 53–47 | W | 0.602 |
+| 2026-11-12 | Women's | South Dakota Coyotes ML vs Creighton Bluejays |   1 | 33% | — | +209 (min) | 54–49 | W | 2.09 |
+| 2026-11-11 | Women's | New Hampshire Wildcats ML vs Dartmouth Big Green |   4 | 55% | — | -115 (min) | 46–51 | L | -1 |
+| 2026-11-11 | Men's | Navy Midshipmen ML vs Pennsylvania Quakers |   2 | 46% | 30% | 230 | 81–76 | W | 2.3 |
 | 2026-11-11 | Men's | San Diego Toreros ML vs Colorado Buffaloes |   3 | 31% | 28% | 255 | 75–83 | L | -1 |
 | 2026-11-11 | Men's | Weber State Wildcats ML vs Utah Utes |   7 | 45% | 29% | 240 | 64–85 | L | -1 |
 | 2026-11-11 | Men's | Michigan State Spartans ML vs Duke Blue Devils |   9 | 69% | 60% | -150 | 79–73 | W | 0.667 |

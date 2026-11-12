@@ -34,3 +34,8 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-10 19:58,mens,401909564,2026-11-11,Michigan State Spartans,Duke Blue Devils,dog,9,0.265,0.6,0.688,-150,Bovada,0.1472,3.0,-201,graded,79,73,W,0.667
 2026-11-10 21:44,mens,401921699,2026-11-11,Weber State Wildcats,Utah Utes,dog,7,0.062,0.294,0.446,240,FanDuel,0.5171,3.0,+131,graded,64,85,L,-1
 2026-11-10 21:46,mens,401909761,2026-11-11,San Diego Toreros,Colorado Buffaloes,dog,3,0.069,0.282,0.307,255,FanDuel,0.0882,0.86,+236,graded,75,83,L,-1
+2026-11-11 18:43,mens,401921181,2026-11-11,Navy Midshipmen,Pennsylvania Quakers,dog,2,0.352,0.303,0.457,230,Bovada,0.507,3.0,+126,graded,81,76,W,2.3
+2026-11-11 19:15,womens,401913775,2026-11-11,New Hampshire Wildcats,Dartmouth Big Green,dog,4,0.36,,0.552,,,,,-115,graded,46,51,L,-1
+2026-11-11 19:49,womens,401911792,2026-11-12,South Dakota Coyotes,Creighton Bluejays,dog,1,0.184,,0.333,,,,,+209,graded,54,49,W,2.09
+2026-11-11 19:50,womens,401913036,2026-11-12,Bryant Bulldogs,Providence Friars,dog,6,0.373,,0.643,,,,,-166,graded,53,47,W,0.602
+2026-11-11 19:51,mens,401911012,2026-11-12,UMass Lowell River Hawks,Massachusetts Minutemen,dog,6,0.297,0.545,0.592,-120,BetMGM,0.085,2.55,-135,graded,62,72,L,-1
