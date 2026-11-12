@@ -1,6 +1,6 @@
 # Halftime Edge: paper record
 
-Updated Thu Nov 12, 12:09 AM ET
+Updated Thu Nov 12, 07:44 AM ET
 
 **Record: 14–26**, **-9.36 units** (1 unit per bet), 40 graded, 0 open.
 
