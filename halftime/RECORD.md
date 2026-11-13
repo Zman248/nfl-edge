@@ -1,13 +1,17 @@
 # Halftime Edge: paper record
 
-Updated Thu Nov 12, 07:44 AM ET
+Updated Thu Nov 12, 11:25 PM ET
 
-**Record: 14–26**, **-9.36 units** (1 unit per bet), 40 graded, 0 open.
+**Record: 17–27**, **-8.58 units** (1 unit per bet), 44 graded, 0 open.
 
-Bets with a real book price: 5–14, -7.34 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 6–15, -7.77 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-13 | Women's | North Florida Ospreys ML vs Little Rock Trojans |   7 | 65% | — | -169 (min) | 71–64 | W | 0.592 |
+| 2026-11-13 | Men's | Canisius Golden Griffins ML vs Brown Bears |  14 | 77% | 64% | -175 | 86–81 | W | 0.571 |
+| 2026-11-12 | Men's | Coppin State Eagles ML vs Bradley Braves |   2 | 33% | 26% | 280 | 54–56 | L | -1 |
+| 2026-11-12 | Women's | South Florida Bulls ML vs Florida Gators |   6 | 64% | — | -163 (min) | 72–70 | W | 0.613 |
 | 2026-11-12 | Men's | UMass Lowell River Hawks ML vs Massachusetts Minutemen |   6 | 59% | 55% | -120 | 62–72 | L | -1 |
 | 2026-11-12 | Women's | Bryant Bulldogs ML vs Providence Friars |   6 | 64% | — | -166 (min) | 53–47 | W | 0.602 |
 | 2026-11-12 | Women's | South Dakota Coyotes ML vs Creighton Bluejays |   1 | 33% | — | +209 (min) | 54–49 | W | 2.09 |
