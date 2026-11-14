@@ -1,13 +1,17 @@
 # Halftime Edge: paper record
 
-Updated Fri Nov 13, 10:56 AM ET
+Updated Fri Nov 13, 11:11 PM ET
 
-**Record: 17–27**, **-8.58 units** (1 unit per bet), 44 graded, 0 open.
+**Record: 19–29**, **-8.68 units** (1 unit per bet), 48 graded, 0 open.
 
-Bets with a real book price: 6–15, -7.77 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 7–15, -6.97 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-14 | Women's | Southern Utah Thunderbirds ML vs Washington State Cougars |   2 | 36% | — | +187 (min) | 69–72 | L | -1 |
+| 2026-11-14 | Women's | Pepperdine Waves ML vs Princeton Tigers |   3 | 32% | — | +225 (min) | 41–49 | L | -1 |
+| 2026-11-14 | Men's | Georgia Bulldogs ML vs North Carolina Tar Heels |   7 | 60% | 56% | -125 | 78–70 | W | 0.8 |
+| 2026-11-14 | Men's | App State Mountaineers ML vs Charlotte 49ers |   3 | 49% | — | +110 (min) | 66–60 | W | 1.1 |
 | 2026-11-13 | Women's | North Florida Ospreys ML vs Little Rock Trojans |   7 | 65% | — | -169 (min) | 71–64 | W | 0.592 |
 | 2026-11-13 | Men's | Canisius Golden Griffins ML vs Brown Bears |  14 | 77% | 64% | -175 | 86–81 | W | 0.571 |
 | 2026-11-12 | Men's | Coppin State Eagles ML vs Bradley Braves |   2 | 33% | 26% | 280 | 54–56 | L | -1 |

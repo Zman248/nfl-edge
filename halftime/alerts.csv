@@ -43,3 +43,7 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-12 18:51,mens,401925631,2026-11-12,Coppin State Eagles,Bradley Braves,dog,2,0.127,0.263,0.331,280,DraftKings,0.2561,2.29,+212,graded,54,56,L,-1
 2026-11-12 19:48,mens,401911307,2026-11-13,Canisius Golden Griffins,Brown Bears,dog,14,0.117,0.636,0.768,-175,Bovada,0.2067,3.0,-293,graded,86,81,W,0.571
 2026-11-12 20:50,womens,401927047,2026-11-13,North Florida Ospreys,Little Rock Trojans,dog,7,0.286,,0.647,,,,,-169,graded,71,64,W,0.592
+2026-11-13 19:51,mens,401925820,2026-11-14,App State Mountaineers,Charlotte 49ers,dog,3,0.336,,0.49,,,,,+110,graded,66,60,W,1.1
+2026-11-13 19:53,mens,401906782,2026-11-14,Georgia Bulldogs,North Carolina Tar Heels,dog,7,0.245,0.556,0.605,-125,FanDuel,0.0891,2.78,-142,graded,78,70,W,0.8
+2026-11-13 21:48,womens,401915325,2026-11-14,Pepperdine Waves,Princeton Tigers,dog,3,0.072,,0.316,,,,,+225,graded,41,49,L,-1
+2026-11-13 21:56,womens,401903556,2026-11-14,Southern Utah Thunderbirds,Washington State Cougars,dog,2,0.162,,0.359,,,,,+187,graded,69,72,L,-1
