@@ -1,13 +1,23 @@
 # Halftime Edge: paper record
 
-Updated Sat Nov 14, 10:43 AM ET
+Updated Sat Nov 14, 09:59 PM ET
 
-**Record: 19–29**, **-8.68 units** (1 unit per bet), 48 graded, 0 open.
+**Record: 21–36**, **-12.89 units** (1 unit per bet), 57 graded, 1 open.
 
-Bets with a real book price: 7–15, -6.97 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 8–21, -11.52 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-15 | Men's | Northwestern State Demons ML vs Little Rock Trojans |   5 | 50% | — | +105 (min) | — | open |  |
+| 2026-11-15 | Men's | NJIT Highlanders ML vs Fairfield Stags |   2 | 33% | 30% | 230 | 60–63 | L | -1 |
+| 2026-11-15 | Men's | Brown Bears ML vs Siena Saints |  10 | 73% | 62% | -160 | 74–79 | L | -1 |
+| 2026-11-15 | Men's | Howard Bison ML vs Davidson Wildcats |   6 | 52% | 41% | 145 | 64–58 | W | 1.45 |
+| 2026-11-14 | Men's | Pennsylvania Quakers ML vs Saint Joseph's Hawks |   4 | 55% | 52% | -110 | 77–83 | L | -1 |
+| 2026-11-14 | Women's | Northwestern Wildcats ML vs App State Mountaineers |   2 | 44% | — | +134 (min) | 75–61 | W | 1.34 |
+| 2026-11-14 | Men's | Utah Tech Trailblazers ML vs California Golden Bears |   9 | 63% | 50% | 100 | 73–79 | L | -1 |
+| 2026-11-14 | Women's | Bellarmine Knights ML vs Bradley Braves |   7 | 51% | — | +103 (min) | 55–65 | L | -1 |
+| 2026-11-14 | Men's | Longwood Lancers ML vs Old Dominion Monarchs |   7 | 63% | 59% | -145 | 74–80 | L | -1 |
+| 2026-11-14 | Men's | UNC Asheville Bulldogs ML vs Georgia Tech Yellow Jackets |   7 | 52% | 39% | 155 | 74–75 | L | -1 |
 | 2026-11-14 | Women's | Southern Utah Thunderbirds ML vs Washington State Cougars |   2 | 36% | — | +187 (min) | 69–72 | L | -1 |
 | 2026-11-14 | Women's | Pepperdine Waves ML vs Princeton Tigers |   3 | 32% | — | +225 (min) | 41–49 | L | -1 |
 | 2026-11-14 | Men's | Georgia Bulldogs ML vs North Carolina Tar Heels |   7 | 60% | 56% | -125 | 78–70 | W | 0.8 |

@@ -47,3 +47,13 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-13 19:53,mens,401906782,2026-11-14,Georgia Bulldogs,North Carolina Tar Heels,dog,7,0.245,0.556,0.605,-125,FanDuel,0.0891,2.78,-142,graded,78,70,W,0.8
 2026-11-13 21:48,womens,401915325,2026-11-14,Pepperdine Waves,Princeton Tigers,dog,3,0.072,,0.316,,,,,+225,graded,41,49,L,-1
 2026-11-13 21:56,womens,401903556,2026-11-14,Southern Utah Thunderbirds,Washington State Cougars,dog,2,0.162,,0.359,,,,,+187,graded,69,72,L,-1
+2026-11-14 16:49,mens,401920307,2026-11-14,UNC Asheville Bulldogs,Georgia Tech Yellow Jackets,dog,7,0.126,0.392,0.525,155,BetRivers,0.338,3.0,-104,graded,74,75,L,-1
+2026-11-14 16:55,mens,401922046,2026-11-14,Longwood Lancers,Old Dominion Monarchs,dog,7,0.291,0.592,0.627,-145,DraftKings,0.0602,2.18,-156,graded,74,80,L,-1
+2026-11-14 17:42,womens,401919667,2026-11-14,Bellarmine Knights,Bradley Braves,dog,7,0.087,,0.506,,,,,+103,graded,55,65,L,-1
+2026-11-14 17:47,mens,401918055,2026-11-14,Utah Tech Trailblazers,California Golden Bears,dog,9,0.162,0.5,0.632,100,BetMGM,0.2639,3.0,-159,graded,73,79,L,-1
+2026-11-14 18:45,womens,401918715,2026-11-14,Northwestern Wildcats,App State Mountaineers,dog,2,0.311,,0.441,,,,,+134,graded,75,61,W,1.34
+2026-11-14 19:23,mens,401920193,2026-11-14,Pennsylvania Quakers,Saint Joseph's Hawks,dog,4,0.37,0.524,0.545,-110,DraftKings,0.0407,1.12,-112,graded,77,83,L,-1
+2026-11-14 19:48,mens,401925774,2026-11-15,Howard Bison,Davidson Wildcats,dog,6,0.176,0.408,0.524,145,DraftKings,0.2837,3.0,-104,graded,64,58,W,1.45
+2026-11-14 19:49,mens,401911308,2026-11-15,Brown Bears,Siena Saints,dog,10,0.296,0.615,0.734,-160,DraftKings,0.1931,3.0,-248,graded,74,79,L,-1
+2026-11-14 19:50,mens,401920867,2026-11-15,NJIT Highlanders,Fairfield Stags,dog,2,0.124,0.303,0.328,230,FanDuel,0.0828,0.9,+214,graded,60,63,L,-1
+2026-11-14 20:57,mens,401925079,2026-11-15,Northwestern State Demons,Little Rock Trojans,dog,5,0.205,,0.503,,,,,+105,open,,,,
