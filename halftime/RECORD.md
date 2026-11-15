@@ -1,14 +1,14 @@
 # Halftime Edge: paper record
 
-Updated Sat Nov 14, 09:59 PM ET
+Updated Sun Nov 15, 09:30 AM ET
 
-**Record: 21–36**, **-12.89 units** (1 unit per bet), 57 graded, 1 open.
+**Record: 21–37**, **-13.89 units** (1 unit per bet), 58 graded, 0 open.
 
 Bets with a real book price: 8–21, -11.52 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-15 | Men's | Northwestern State Demons ML vs Little Rock Trojans |   5 | 50% | — | +105 (min) | — | open |  |
+| 2026-11-15 | Men's | Northwestern State Demons ML vs Little Rock Trojans |   5 | 50% | — | +105 (min) | 83–84 | L | -1 |
 | 2026-11-15 | Men's | NJIT Highlanders ML vs Fairfield Stags |   2 | 33% | 30% | 230 | 60–63 | L | -1 |
 | 2026-11-15 | Men's | Brown Bears ML vs Siena Saints |  10 | 73% | 62% | -160 | 74–79 | L | -1 |
 | 2026-11-15 | Men's | Howard Bison ML vs Davidson Wildcats |   6 | 52% | 41% | 145 | 64–58 | W | 1.45 |
