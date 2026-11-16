@@ -1,13 +1,17 @@
 # Halftime Edge: paper record
 
-Updated Sun Nov 15, 09:30 AM ET
+Updated Sun Nov 15, 10:20 PM ET
 
-**Record: 21–37**, **-13.89 units** (1 unit per bet), 58 graded, 0 open.
+**Record: 22–40**, **-16.37 units** (1 unit per bet), 62 graded, 0 open.
 
-Bets with a real book price: 8–21, -11.52 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 9–24, -14.00 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-16 | Women's | Hawai'i Rainbow Wahine ML vs Loyola Marymount Lions |   5 | 53% | 49% | 105 | 49–59 | L | -1 |
+| 2026-11-16 | Men's | Syracuse Orange ML vs St. John's Red Storm |   3 | 40% | 32% | 215 | 62–79 | L | -1 |
+| 2026-11-15 | Women's | Louisville Cardinals ML vs UConn Huskies |  14 | 88% | 66% | -190 | 69–51 | W | 0.526 |
+| 2026-11-15 | Women's | Gonzaga Bulldogs ML vs Stanford Cardinal |   4 | 56% | 46% | 120 | 65–67 | L | -1 |
 | 2026-11-15 | Men's | Northwestern State Demons ML vs Little Rock Trojans |   5 | 50% | — | +105 (min) | 83–84 | L | -1 |
 | 2026-11-15 | Men's | NJIT Highlanders ML vs Fairfield Stags |   2 | 33% | 30% | 230 | 60–63 | L | -1 |
 | 2026-11-15 | Men's | Brown Bears ML vs Siena Saints |  10 | 73% | 62% | -160 | 74–79 | L | -1 |
