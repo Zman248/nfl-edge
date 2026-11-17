@@ -1,13 +1,16 @@
 # Halftime Edge: paper record
 
-Updated Mon Nov 16, 06:53 AM ET
+Updated Tue Nov 17, 01:28 AM ET
 
-**Record: 22–40**, **-16.37 units** (1 unit per bet), 62 graded, 0 open.
+**Record: 24–41**, **-14.72 units** (1 unit per bet), 65 graded, 0 open.
 
-Bets with a real book price: 9–24, -14.00 units. Bets without one are graded at the minimum price the alert said to accept.
+Bets with a real book price: 10–24, -13.04 units. Bets without one are graded at the minimum price the alert said to accept.
 
 | Date | League | Bet | Lead at half | Model | Book | Price | Final | Result | Units |
 |---|---|---|---|---|---|---|---|---|---|
+| 2026-11-17 | Men's | Columbia Lions ML vs Northwestern Wildcats |   9 | 63% | 51% | -105 | 75–53 | W | 0.952 |
+| 2026-11-17 | Men's | Long Island University Sharks ML vs St. Thomas Tommies |   6 | 62% | — | -151 (min) | 70–79 | L | -1 |
+| 2026-11-17 | Women's | Emory & Henry Wasps ML vs Longwood Lancers |  12 | 38% | — | +169 (min) | 76–68 | W | 1.69 |
 | 2026-11-16 | Women's | Hawai'i Rainbow Wahine ML vs Loyola Marymount Lions |   5 | 53% | 49% | 105 | 49–59 | L | -1 |
 | 2026-11-16 | Men's | Syracuse Orange ML vs St. John's Red Storm |   3 | 40% | 32% | 215 | 62–79 | L | -1 |
 | 2026-11-15 | Women's | Louisville Cardinals ML vs UConn Huskies |  14 | 88% | 66% | -190 | 69–51 | W | 0.526 |

@@ -61,3 +61,6 @@ logged_et,league,game_id,date,team,opp,side,lead,pre_p,book_p,model_p,price,book
 2026-11-15 18:19,womens,401906079,2026-11-15,Louisville Cardinals,UConn Huskies,dog,14,0.333,0.655,0.875,-190,Bovada,0.3349,3.0,-563,graded,69,51,W,0.526
 2026-11-15 19:49,mens,401920681,2026-11-16,Syracuse Orange,St. John's Red Storm,dog,3,0.177,0.317,0.405,215,FanDuel,0.2746,3.0,+155,graded,62,79,L,-1
 2026-11-15 20:30,womens,401928046,2026-11-16,Hawai'i Rainbow Wahine,Loyola Marymount Lions,dog,5,0.218,0.488,0.526,105,BetMGM,0.0777,1.85,-104,graded,49,59,L,-1
+2026-11-16 19:44,womens,401922326,2026-11-17,Emory & Henry Wasps,Longwood Lancers,dog,12,0.003,,0.383,,,,,+169,graded,76,68,W,1.69
+2026-11-16 19:51,mens,401919807,2026-11-17,Long Island University Sharks,St. Thomas Tommies,dog,6,0.362,,0.62,,,,,-151,graded,70,79,L,-1
+2026-11-16 20:47,mens,401920735,2026-11-17,Columbia Lions,Northwestern Wildcats,dog,9,0.162,0.512,0.632,-105,Bovada,0.2338,3.0,-159,graded,75,53,W,0.952
